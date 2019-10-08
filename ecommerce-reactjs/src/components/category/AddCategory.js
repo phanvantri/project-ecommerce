@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-/*Thuw viện giúp kết nối qua CategoryAction.js để bắt đến back-end */
+/*Thuw viện giúp kết nối qua CategoryAction.js để bắt đến back-end CỤ THỂ LÀ actions CategoryActions.js*/
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import { addCategory} from '../../actions/CategoryActions';
@@ -16,10 +16,18 @@ class AddCategory extends Component {
             note:"",
             status:"",
             dateAdd:"",
-            dateUpdate:""
+            dateUpdate:"",
+            errors:{}
         };
         this.onChange=this.onChange.bind(this);
         this.onSubmit=this.onSubmit.bind(this);
+    }
+    //Bắt sự kiện xảy ra lỗi nếu không có tên danh mục
+    componentWillReceiveProps(nextProps){
+
+      if(nextProps.errors){
+        this.setState({errors: nextProps.errors});
+      }
     }
      /* Bắt sự kiện thay đổi giá trị input */
     onChange(e){
@@ -41,6 +49,8 @@ class AddCategory extends Component {
     }
     /* */
     render() {
+      //Bat loi
+      const { errors} =this.state;
         return (
             <div className="addProjectTask">
             <div className="container">
@@ -53,10 +63,18 @@ class AddCategory extends Component {
                   <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label >Tên danh mục:</label>
-                      <input type="text" className="form-control form-control-lg" name="nameCategory" 
+                      <input type="text" className={classnames("form-control form-control-lg",{
+                        "is-invalid":errors.nameCategory
+                      })} name="nameCategory" 
                       placeholder="Nhập tên danh mục..." value={this.state.nameCategory} 
-                      onChange={this.onChange}/>
+                      onChange={this.onChange}
+                      />
+                       {errors.nameCategory && (
+                      <div className="invalid-feedback">{errors.nameCategory}</div>
+                      )}
                     </div>
+                   
+                     
                     
                     <div className="form-group">
                     <label >Ghi chú:</label>

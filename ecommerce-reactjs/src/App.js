@@ -1,25 +1,31 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Narbar from './components/Narbar';
-import Category from './components/Category';
 
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-import AddCategory from './components/category/AddCategory';
-import UpdateCategory from './components/category/UpdateCategory';
+import Headers from './components/header/Header';
+import Nar from './components/nar/Nar'
 //Connect Redux
 import {Provider} from 'react-redux';
 import store from './store';
+//
+import Menu from './components/menu/Menu'
+import Banner from './components/banner/Banner';
+import Footer from './components/footer/Footer';
+import Body from './components/body/Body';
+
 
 function App() {
   return (
     <Provider store={store}>
         <Router>
         <div className="App">
-          <Narbar></Narbar>
-          <Route exact path="/" component={Category}/>
-          <Route exact path="/addCategory" component={AddCategory}/>
-          <Route exact path="/updateCategory" component={UpdateCategory}/>
+        <Nar></Nar>
+        <Headers></Headers>
+        <Menu></Menu>
+        <Body></Body>
+        
+        <Footer></Footer>
         </div>
         </Router>
     </Provider>
