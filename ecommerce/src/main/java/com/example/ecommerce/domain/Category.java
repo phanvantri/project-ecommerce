@@ -5,7 +5,11 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name="category")
@@ -13,12 +17,12 @@ import java.util.Date;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idcategory")
-    private int id;
+    @Column(name="id")
+    private Long id;
 
-    @Column(name="namecategory")
+    @Column(name="name")
     @NotBlank(message="Tên Danh Mục không để trống!!")
-    private String nameCategory;
+    private String name;
 
     @Column(name="dateadd")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -30,4 +34,7 @@ public class Category {
 
     @Column(name="note")
     private String note;
+   /* @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "category", orphanRemoval = true)
+    private List<Category_Sub> categorySub=new ArrayList<>();*/
 }
