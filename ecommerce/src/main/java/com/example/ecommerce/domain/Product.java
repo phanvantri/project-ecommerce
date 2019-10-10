@@ -20,17 +20,11 @@ public class Product {
 
     @Column(name="code")
     private String code;
-
     @Column(name="description")
     private String description;
 
     @Column(name="brand")
     private String brand;
-
-    @ManyToOne(fetch = FetchType.LAZY) //mặc định là FetchType.EAGER
-    @JoinColumn(name="idstore")
-    @JsonIgnore
-    private Store store;
 
     @Column(name="size")
     private String size;

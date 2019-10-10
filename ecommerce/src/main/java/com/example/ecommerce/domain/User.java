@@ -41,9 +41,6 @@ public class User {
     @Column(name="linkimage")
     private String linkimage;
 
-    @OneToMany(cascade=CascadeType.ALL,mappedBy = "user")
-    private List<Store> stores=new ArrayList<>();
-
 
     @JsonIgnore
     private String password;
