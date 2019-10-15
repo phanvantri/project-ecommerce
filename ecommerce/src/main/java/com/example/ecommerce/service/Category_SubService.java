@@ -13,8 +13,18 @@ import java.util.List;
 public class Category_SubService {
     @Autowired
     private Category_SubRepository category_subRepository;
+
     Category_SubMapper category_subMapper=new Category_SubMapper();
+
     public List<Category_SubDTO> findAllByCategory(Long idCategory){
         return category_subMapper.toDto(category_subRepository.findAllByCategoryById(idCategory));
+    }
+
+    public Category_SubDTO findOneById(Long id){
+        return category_subMapper.toDto(category_subRepository.findOneById(id));
+    }
+
+    public void save(Category_SubDTO category_subDTO){
+
     }
 }

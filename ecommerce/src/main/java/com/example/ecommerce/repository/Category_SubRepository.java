@@ -11,4 +11,6 @@ import java.util.List;
 public interface Category_SubRepository  extends JpaRepository<Category_Sub,Long> {
     @Query("select e from Category_Sub e where e.category.id=?1")
     List<Category_Sub> findAllByCategoryById(Long id);
+
+    Category_Sub findOneById(Long id);
 }
