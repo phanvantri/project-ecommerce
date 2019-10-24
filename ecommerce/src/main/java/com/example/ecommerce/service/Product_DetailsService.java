@@ -5,6 +5,8 @@ import com.example.ecommerce.repository.Product_DetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class Product_DetailsService {
     @Autowired
@@ -12,5 +14,9 @@ public class Product_DetailsService {
 
     public Product_Details findById(Long id){
         return product_detailsRepository.findByIdProduct(id);
+    }
+
+    public List<Product_Details> findAll(){
+        return product_detailsRepository.findAll();
     }
 }

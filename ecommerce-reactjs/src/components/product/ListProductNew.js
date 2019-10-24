@@ -2,9 +2,17 @@ import React, { Component } from 'react';
 import abc from '../../img/m1.jpg';
 import { Link, NavLink } from 'react-router-dom';
 import Discount from './Discount';
+import {connect} from 'react-redux';
+import propTypes from 'prop-types';
+import {getProductNew} from '../../actions/ProductNewAction'
 class ListProductNew extends Component {
+  componentDidMount(){
+    this.props.getProductNew(); //gọi tới function của ProductNewAction
+  }
 
     render() {
+      const {product_new}=this.props.product_new;
+      console.log(product_new);
         return (
       
                                                 <div className="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mb-4">
@@ -68,5 +76,12 @@ class ItemProduct extends Component{
         );
     }
 }
+ListProductNew.propTypes={
+  getProductNew:propTypes.func.isRequired// check function thoi ko quang trong
 
-export default ListProductNew;
+}
+const mapStateToProps =state =>({
+  product_new:state.product_new
+})
+
+export default connect(mapStateToProps,{getProductNew}) (ListProductNew);  //connect ket noi toi store lay cai getProductNew gán vào mapStateToProps
