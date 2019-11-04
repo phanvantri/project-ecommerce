@@ -18,7 +18,7 @@ class Body extends Component {
             
                 <Route exact path="/" component={Banner}/>
                 <Route exact path="/" component={ListCategory}/>   
-                <Route exact path="/" component={ListProduct}/>        
+                <Route exact path="/" component={ListProduct}/>       
                 <Route exact path="/Login" component={Login}/>
                 <Route exact path="/category" component={Category}/>
                 <Route exact path="/addCategory" component={AddCategory}/>

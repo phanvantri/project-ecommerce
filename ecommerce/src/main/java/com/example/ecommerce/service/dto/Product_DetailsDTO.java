@@ -17,5 +17,7 @@ public class Product_DetailsDTO {
     private String  size;
     private String  color;
     private Boolean  status;
+    private int sumseller;
+    private Boolean New;
     private List<Image_Product> lstImage=new ArrayList<>();
 }

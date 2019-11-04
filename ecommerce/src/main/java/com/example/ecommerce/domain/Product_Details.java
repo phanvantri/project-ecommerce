@@ -45,6 +45,12 @@ public class Product_Details {
     @Column(name="status")
     private Boolean  status;
 
+    @Column(name="sumseller")
+    private int sumseller;
+
+    @Column(name="new")
+    private Boolean New;
+
     @OneToMany(cascade = CascadeType.ALL,
             mappedBy = "product", orphanRemoval = true,fetch = FetchType.EAGER)
     private List<Image_Product> lstImage=new ArrayList<>();

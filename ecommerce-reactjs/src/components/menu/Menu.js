@@ -29,13 +29,13 @@ class Menu extends Component {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul className="navbar-nav ml-auto text-center mr-xl-5">
                     <li className="nav-item active mr-lg-2 mb-lg-0 mb-2">
-                      <a className="nav-link" href="index.html">Home
+                      <a className="nav-link" href="index.html">Trang chủ
                         <span className="sr-only">(current)</span>
                       </a>
                     </li>
                     <li className="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
                       <a className="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Electronics
+                        Sự kiện
                       </a>
                       <div className="dropdown-menu">
                         <div className="agile_inner_drop_nav_info p-4">
@@ -103,7 +103,7 @@ class Menu extends Component {
                     </li>
                     <li className="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
                       <a className="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Appliances
+                        Khuyến mãi
                       </a>
                       <div className="dropdown-menu">
                         <div className="agile_inner_drop_nav_info p-4">
@@ -176,28 +176,11 @@ class Menu extends Component {
                       </div>
                     </li>
                     <li className="nav-item mr-lg-2 mb-lg-0 mb-2">
-                      <a className="nav-link" href="about.html">About Us</a>
+                      <a className="nav-link" href="about.html">Thông tin về chúng tôi</a>
                     </li>
-                    <li className="nav-item mr-lg-2 mb-lg-0 mb-2">
-                      <a className="nav-link" href="product.html">New Arrivals</a>
-                    </li>
-                    <li className="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
-                      <a className="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Pages
-                      </a>
-                      <div className="dropdown-menu">
-                        <a className="dropdown-item" href="product.html">Product 1</a>
-                        <a className="dropdown-item" href="product2.html">Product 2</a>
-                        <div className="dropdown-divider" />
-                        <a className="dropdown-item" href="single.html">Single Product 1</a>
-                        <a className="dropdown-item" href="single2.html">Single Product 2</a>
-                        <div className="dropdown-divider" />
-                        <a className="dropdown-item" href="checkout.html">Checkout Page</a>
-                        <a className="dropdown-item" href="payment.html">Payment Page</a>
-                      </div>
-                    </li>
+                   
                     <li className="nav-item">
-                      <a className="nav-link" href="contact.html">Contact Us</a>
+                      <a className="nav-link" href="contact.html">Liên hệ</a>
                     </li>
                   </ul>
                 </div>

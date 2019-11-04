@@ -1,10 +1,12 @@
+//danh sách sản phẩm mới
 import React, { Component } from 'react';
 import abc from '../../img/m1.jpg';
 import { Link, NavLink } from 'react-router-dom';
 import Discount from './Discount';
 import {connect} from 'react-redux';
 import propTypes from 'prop-types';
-import {getProductNew} from '../../actions/ProductNewAction'
+import {getProductNew} from '../../actions/ProductAction';
+import Pagination from "react-js-pagination";
 class ListProductNew extends Component {
   componentDidMount(){
     this.props.getProductNew(); //gọi tới function của ProductNewAction
@@ -13,16 +15,32 @@ class ListProductNew extends Component {
     render() {
       const {product_new}=this.props.product_new;
       console.log(product_new);
+      let lstProductnews=[];
+      const Product = product_new =>{
+        if(product_new.length < 1){
+          return (
+            <div className="alert alert-info text-center" role="alert">
+              Sản phẩm trống hông có gì cả
+            </div>
+          );
+        }
+        else{
+          const lstproduct_new=product_new.map(item=>(
+            <ItemProduct product={item}></ItemProduct>
+
+          ));
+          for (let i = 0; i < lstproduct_new.length; i++) {
+            lstProductnews.push(lstproduct_new[i]);
+        }
+        }
+      };
+      Product(product_new);
         return (
       
                                                 <div className="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mb-4">
                                                 <h3 class="heading-tittle text-center font-italic">Sản phẩm mới</h3>
                                                     <div className="row">
-                                                        <ItemProduct></ItemProduct>
-                                                        <ItemProduct></ItemProduct>
-                                                        <ItemProduct></ItemProduct>
-                                                        <ItemProduct></ItemProduct>
-                                                        <ItemProduct></ItemProduct>
+                                                        {lstProductnews}
                                                     </div>
                                                 </div>
                                       
@@ -48,11 +66,11 @@ class ItemProduct extends Component{
               </div>
               <div className="item-info-product text-center border-top mt-4">
                 <h4 className="pt-1">
-                  <a href="single.html">OPPO A37f</a>
+                  <a href="single.html">{this.props.product.name}</a>
                 </h4>
                 <div className="info-product-price my-2">
-                  <span className="item_price">$230.00</span>
-                  <del>$250.00</del>
+                  <span className="item_price">{this.props.product.product_details.pricesale} đồng.</span>
+                  <del>{this.props.product.product_details.price}</del>
                 </div>
                 <div className="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
                   <form action="#" method="post">

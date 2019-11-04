@@ -2,6 +2,7 @@ package com.example.ecommerce.web.rest;
 
 import com.example.ecommerce.domain.Product_Details;
 import com.example.ecommerce.service.Product_DetailsService;
+import com.example.ecommerce.service.dto.Product_DetailsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,8 @@ public class Product_DetailsController {
     private Product_DetailsService product_detailsService;
 
     @GetMapping("/getproductdetails")
-    public ResponseEntity<Product_Details> findById(){
-        Product_Details p= product_detailsService.findById(Long.parseLong("1"));
-        return new ResponseEntity<Product_Details>(p, HttpStatus.CREATED);
+    public ResponseEntity<Product_DetailsDTO> findByIdProduct(){
+        Product_DetailsDTO p= product_detailsService.findByIdProduct(Long.parseLong("1"));
+        return new ResponseEntity<Product_DetailsDTO>(p, HttpStatus.CREATED);
     }
 }
