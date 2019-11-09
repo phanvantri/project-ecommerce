@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ListProductNew from './ListProductNew';
 import Discount from './Discount';
+import Product from './Product';
 
 class ListProduct extends Component {
 
@@ -13,7 +14,7 @@ class ListProduct extends Component {
                                 <div className="agileinfo-ads-display col-lg-9">
                                             <div className="wapper">
                                                 <ListProductNew></ListProductNew>
-                                                <ListProductNew></ListProductNew>
+                                                <Product></Product>
                                             </div>
                                 </div>
                         </div>

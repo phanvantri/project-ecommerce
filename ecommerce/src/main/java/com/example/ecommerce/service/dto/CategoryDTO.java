@@ -11,4 +11,5 @@ public class CategoryDTO {
     private Date dateAdd;
     private Date dateUpdate;
     private String note;
+    private String linkimage;
 }

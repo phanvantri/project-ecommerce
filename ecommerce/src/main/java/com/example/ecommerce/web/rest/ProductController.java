@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -26,9 +27,9 @@ public class ProductController {
 
 
     @GetMapping("/getallProduct")
-    public ResponseEntity<Page<Product>> findAll(@RequestParam int page ){
+    public ResponseEntity<Page<Product>> findAll(@RequestParam int page, @RequestParam int size ){
 
-        Page<Product> lstProducts=productService.findAllPage(page);
+        Page<Product> lstProducts=productService.findAllPage(page,size);
         if(lstProducts.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<Page<Product>>(lstProducts, HttpStatus.OK);
@@ -55,6 +56,9 @@ public class ProductController {
 
         productService.save(productDTO);
        return new ResponseEntity<ProductDTO>(productDTO,HttpStatus.CREATED);
-
+    }
+    @GetMapping("/productdetail")
+    public ResponseEntity<Optional<Product>> getproductdetails(@RequestParam String id){
+        return new ResponseEntity<Optional<Product>>(productService.getdetailsProduct(Long.parseLong(id)),HttpStatus.OK);
     }
 }

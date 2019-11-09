@@ -14,7 +14,6 @@ class ListProductNew extends Component {
 
     render() {
       const {product_new}=this.props.product_new;
-      console.log(product_new);
       let lstProductnews=[];
       const Product = product_new =>{
         if(product_new.length < 1){
@@ -56,10 +55,10 @@ class ItemProduct extends Component{
             <div className="col-md-4 product-men mt-5">
             <div className="men-pro-item simpleCart_shelfItem">
               <div className="men-thumb-item text-center">
-              <img src={abc} alt="logo" />
+              <img src={this.props.product.imagephoto} alt="logo" className="fixed_img_product" />
                 <div className="men-cart-pro">
                   <div className="inner-men-cart-pro">
-                    <a href="single.html" className="link-product-add-cart">Xem chi tiết</a>
+                    <NavLink to={`/product/${this.props.product.id}`} className="link-product-add-cart">Xem chi tiết</NavLink>
                   </div>
                 </div>
                 <span className="product-new-top">New</span>

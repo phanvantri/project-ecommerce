@@ -7,5 +7,7 @@ export default combineReducers({
   //
   errors: errorsReducer,
   project_Category: CategoryListReducer,
-  product_new: ProductReducer
+  product_new: ProductReducer,
+  product:ProductReducer,
+  productdetail:ProductReducer
 });

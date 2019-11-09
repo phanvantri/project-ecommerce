@@ -6,6 +6,7 @@ import com.example.ecommerce.repository.Category_SubRepository;
 import com.example.ecommerce.repository.ProductRepository;
 import com.example.ecommerce.service.dto.ProductDTO;
 import com.example.ecommerce.service.mapper.ProductMapper;
+import jdk.nashorn.internal.runtime.options.Option;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -33,8 +35,8 @@ public class ProductService {
     public List<ProductDTO> findAllByProductSumseller(){
         return productMapper.toDto(productRepository.findAllByProductSumseller());
     }
-    public Page<Product> findAllPage(int page){
-        Pageable pageable= PageRequest.of(page,2);//0 là trang, 2 la so phan tu
+    public Page<Product> findAllPage(int page,int size){
+        Pageable pageable= PageRequest.of(page,size);//0 là trang, 2 la so phan tu
         Page<Product> lst=productRepository.findAll(pageable);
         return lst;
     }
@@ -49,6 +51,10 @@ public class ProductService {
         Product product=productMapper.toEntity(productDTO);
         productRepository.delete(product);
 
+    }
+    public Optional<Product> getdetailsProduct(Long id){
+        Optional<Product> product=productRepository.findById(id);
+        return product;
     }
 
 }

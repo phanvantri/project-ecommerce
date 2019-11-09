@@ -39,7 +39,7 @@ public class User {
     private String address;
 
     @Column(name="linkimage")
-    private String linkimage;
+    private String imageUrl;
 
 
     @JsonIgnore

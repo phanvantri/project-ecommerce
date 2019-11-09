@@ -5,6 +5,9 @@ import com.example.ecommerce.repository.CategoryRepository;
 import com.example.ecommerce.service.dto.CategoryDTO;
 import com.example.ecommerce.service.mapper.CategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +30,11 @@ public class CategoryService {
 
         return categoryMapper.toDto(categoryRepository.findOneById(id));
 
+    }
+    public Page<Category> findAllPage(int page, int size){
+        Pageable pageable= PageRequest.of(page,size);//0 là trang, 2 la so phan tu
+        Page<Category> lst=categoryRepository.findAll(pageable);
+        return lst;
     }
 
     public Category saveCategory(Category category){

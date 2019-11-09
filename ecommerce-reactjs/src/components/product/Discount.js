@@ -6,23 +6,17 @@ class Discount extends Component {
         return (
             <div className="col-lg-3 mt-lg-0 mt-4 p-lg-0">
             <div className="side-bar p-sm-4 p-3">
-              <div className="search-hotel border-bottom py-2">
-                <h3 className="agileits-sear-head mb-3">Tìm kiếm...</h3>
-                <form action="#" method="post">
-                  <input type="search" placeholder="Product name..." name="search" required />
-                  <input type="submit" defaultValue=" " />
-                </form>
-              </div>
+            
               {/* price */}
               <div className="range border-bottom py-2">
-                <h3 className="agileits-sear-head mb-3">Giá</h3>
+                <h3 className="agileits-sear-head mb-3">Giá sản phẩm</h3>
                 <div className="w3l-range">
                   <ul>
                     <li>
                       <a href="#">Dưới 100,000</a>
                     </li>
                     <li className="my-1">
-                      <a href="#">$100,000 - 200,000</a>
+                      <a href="#">100,000 - 200,000</a>
                     </li>
                     <li>
                       <a href="#">200,000 - 300,000</a>

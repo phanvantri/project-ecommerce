@@ -5,6 +5,7 @@ import com.example.ecommerce.service.CategoryService;
 import com.example.ecommerce.service.dto.CategoryDTO;
 import org.apache.tomcat.util.http.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -25,9 +26,9 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/category")
-    public ResponseEntity<List<CategoryDTO>> getCategory(){
-        List<CategoryDTO> list=categoryService.getCategory();
-        return  new ResponseEntity<List<CategoryDTO>>(list,HttpStatus.OK);
+    public ResponseEntity<Page<Category>> getCategory(@RequestParam int page,@RequestParam int size){
+        Page<Category> list=categoryService.findAllPage(page,size);
+        return  new ResponseEntity<Page<Category>>(list,HttpStatus.OK);
     }
 
     @GetMapping("/category/{id}")

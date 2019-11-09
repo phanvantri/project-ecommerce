@@ -9,6 +9,8 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import ListCategory from '../category/ListCategory';
 import ListProductNew from '../product/ListProductNew';
 import ListProduct from '../product/ListProduct';
+import ProductDetail from '../product/ProductDetail';
+
 
 class Body extends Component {
 
@@ -24,6 +26,7 @@ class Body extends Component {
                 <Route exact path="/addCategory" component={AddCategory}/>
                 <Route exact path="/updateCategory" component={UpdateCategory}/>
                 <Route exact path="/signup" component={Signup}/>
+                <Route exact path="/product/:id" component={ProductDetail}/>
             </div>
         );
     }

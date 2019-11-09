@@ -1,4 +1,4 @@
-package com.example.ecommerce.web.rest;
+package com.example.ecommerce.web;
 
 import com.example.ecommerce.domain.Category;
 import com.example.ecommerce.service.CategoryService;

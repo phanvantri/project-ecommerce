@@ -23,8 +23,8 @@ export const addCategory=(category_add,history) => async dispatch =>{
     
 }
 
-export const getAllCategory = () => async dispatch =>{
-    const res=await axios.get("http://localhost:8080/api/category");
+export const getAllCategory = (page) => async dispatch =>{
+    const res=await axios.get("http://localhost:8080/api/category?page="+page+"&size=4");
     dispatch({
         type:GET_PROJECT_CATEGORY,
         payload:res.data
