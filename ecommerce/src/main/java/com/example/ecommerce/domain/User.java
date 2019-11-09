@@ -29,8 +29,8 @@ public class User {
     @Column(name="email",nullable = false)
     private String email;
 
-    @Column(name="emailVerified",nullable = false)
-    private  Boolean emailVerified;
+   /* @Column(name="emailVerified",nullable = false)
+    private  Boolean emailVerified;*/
 
     @Column(name="phone")
     private String phone;
@@ -47,8 +47,10 @@ public class User {
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Transient
     private AuthProvider provider;
 
+    @Transient
     private String providerId;
 
 

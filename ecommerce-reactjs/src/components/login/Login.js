@@ -4,11 +4,33 @@ import logogg from '../..//img/google-logo.png'
 import logogit from '../..//img/github-logo.png'
 import logofb from '../../img/fb-logo.png'
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from '../login/constants';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
 import './Login.css'
 class Login extends Component {
+    componentDidMount() {
+        // If the OAuth2 login encounters an error, the user is redirected to the /login page with an error
+        // Here we display the error and then remove the error query parameter from the location.
+        if(this.props.location.state && this.props.location.state.error) {
+            setTimeout(() => {
+                Alert.error(this.props.location.state.error, {
+                    timeout: 5000
+                });
+                this.props.history.replace({
+                    pathname: this.props.location.pathname,
+                    state: {}
+                });
+            }, 100);
+        }
+    }
     render() {
+        if(this.props.authenticated) {
+            return <Redirect
+                to={{
+                pathname: "/",
+                state: { from: this.props.location }
+            }}/>;            
+        }
         return (
             <div className="login-container">
                 <div className="login-content">
