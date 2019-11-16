@@ -22,15 +22,34 @@ public class User {
     @Column(name="name",nullable = false)
     private String name;
 
-    @Column(name="fullname",nullable = false)
-    private String fullname;
+
 
     @Email
     @Column(name="email",nullable = false)
     private String email;
 
-   /* @Column(name="emailVerified",nullable = false)
-    private  Boolean emailVerified;*/
+     @Column(name="emailverified")
+    private  Boolean emailVerified;
+
+    @JsonIgnore
+    @Column(name="password")
+    private String password;
+
+    @Column(name="linkimage")
+    private String imageUrl;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name="provider")
+    private AuthProvider provider;
+
+    @Column(name="providerid")
+    private String providerId;
+
+    @Column(name="fullname",nullable = false)
+    private String fullname;
+
+
 
     @Column(name="phone")
     private String phone;
@@ -38,20 +57,9 @@ public class User {
     @Column(name = "address")
     private String address;
 
-    @Column(name="linkimage")
-    private String imageUrl;
 
 
-    @JsonIgnore
-    private String password;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Transient
-    private AuthProvider provider;
-
-    @Transient
-    private String providerId;
 
 
 

@@ -33,74 +33,7 @@ class Menu extends Component {
                         <span className="sr-only">(current)</span>
                       </a>
                     </li>
-                    <li className="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
-                      <a className="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Sự kiện
-                      </a>
-                      <div className="dropdown-menu">
-                        <div className="agile_inner_drop_nav_info p-4">
-                          <h5 className="mb-3">Mobiles, Computers</h5>
-                          <div className="row">
-                            <div className="col-sm-6 multi-gd-img">
-                              <ul className="multi-column-dropdown">
-                                <li>
-                                  <a href="product.html">All Mobile Phones</a>
-                                </li>
-                                <li>
-                                  <a href="product.html">All Mobile Accessories</a>
-                                </li>
-                                <li>
-                                  <a href="product.html">Cases &amp; Covers</a>
-                                </li>
-                                <li>
-                                  <a href="product.html">Screen Protectors</a>
-                                </li>
-                                <li>
-                                  <a href="product.html">Power Banks</a>
-                                </li>
-                                <li>
-                                  <a href="product.html">All Certified Refurbished</a>
-                                </li>
-                                <li>
-                                  <a href="product.html">Tablets</a>
-                                </li>
-                                <li>
-                                  <a href="product.html">Wearable Devices</a>
-                                </li>
-                                <li>
-                                  <a href="product.html">Smart Home</a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div className="col-sm-6 multi-gd-img">
-                              <ul className="multi-column-dropdown">
-                                <li>
-                                  <a href="product.html">Laptops</a>
-                                </li>
-                                <li>
-                                  <a href="product.html">Drives &amp; Storage</a>
-                                </li>
-                                <li>
-                                  <a href="product.html">Printers &amp; Ink</a>
-                                </li>
-                                <li>
-                                  <a href="product.html">Networking Devices</a>
-                                </li>
-                                <li>
-                                  <a href="product.html">Computer Accessories</a>
-                                </li>
-                                <li>
-                                  <a href="product.html">Game Zone</a>
-                                </li>
-                                <li>
-                                  <a href="product.html">Software</a>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
+                   
                     <li className="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
                       <a className="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Khuyến mãi

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
-import logogg from '../..//img/google-logo.png'
-import logogit from '../..//img/github-logo.png'
-import logofb from '../../img/fb-logo.png'
-import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from '../login/constants';
+import logogg from '../../../img/google-logo.png'
+import logogit from '../../../img/github-logo.png'
+import logofb from '../../../img/fb-logo.png'
+import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from '../../../constants';
+import { login } from '../../../utils/APIUtils';
 import {Link, Redirect} from 'react-router-dom';
-import Alert from 'react-bootstrap/Alert';
+import Alert from 'react-s-alert';
 import './Login.css'
 class Login extends Component {
     componentDidMount() {
@@ -88,7 +89,7 @@ class LoginForm extends Component {
 
         const loginRequest = Object.assign({}, this.state);
 
-        Login(loginRequest)
+        login(loginRequest)
         .then(response => {
             localStorage.setItem(ACCESS_TOKEN, response.accessToken);
             Alert.success("You're successfully logged in!");

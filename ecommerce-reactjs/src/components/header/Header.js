@@ -29,8 +29,7 @@ class Header extends Component {
                         <button className="btn my-2 my-sm-0" type="submit">Search</button>
                       </form>
                     </div>
-                    {/* //search */}
-                    {/* cart details */}
+                 
                     <div className="col-2 top_nav_right text-center mt-sm-0 mt-2">
                       <div className="wthreecartaits wthreecartaits2 cart cart box_1">
                         <form action="#" method="post" className="last">
@@ -42,7 +41,7 @@ class Header extends Component {
                         </form>
                       </div>
                     </div>
-                    {/* //cart details */}
+               
                   </div>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/projectecommerce?useSSL=false
+    url: jdbc:mysql://localhost:3306/projectecommerce?allowPublicKeyRetrieval=true&0useSSL=false
     username: root
     password: 2105
 

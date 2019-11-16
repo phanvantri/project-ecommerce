@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './Signup.css'
-import logofb from '../../img/fb-logo.png'
-import logogg from '../../img/google-logo.png'
-import logogit from '../../img/github-logo.png'
-import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from '../login/constants';
+import logofb from '../../../img/fb-logo.png'
+import logogg from '../../../img/google-logo.png'
+import logogit from '../../../img/github-logo.png'
+import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from '../../../constants';
 import { Link, Redirect } from 'react-router-dom';
-import Alert from 'react-bootstrap/Alert';
-import { signup } from '../../utils/APIUtils';
+import Alert from 'react-s-alert';
+import { signup } from '../../../utils/APIUtils';
 
 class Signup extends Component {
 
@@ -82,7 +82,7 @@ class SignupForm extends Component {
             Alert.success("You're successfully registered. Please login to continue!");
             this.props.history.push("/login");
         }).catch(error => {
-            Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');            
+            Alert.error('Oops! Something went wrong. Please try again!');            
         });
     }
 

@@ -37,7 +37,7 @@ class Product extends Component {
     render() {
       const {product}=this.props.product;
       
-      console.log({product});
+     
       let lstProduct=[];
       const lst=product.content;
       const totalPages=product.totalPages;
