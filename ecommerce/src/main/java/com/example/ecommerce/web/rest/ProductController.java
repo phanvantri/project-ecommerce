@@ -4,6 +4,7 @@ import com.example.ecommerce.domain.Category_Sub;
 import com.example.ecommerce.domain.Product;
 import com.example.ecommerce.service.Category_SubService;
 import com.example.ecommerce.service.ProductService;
+import com.example.ecommerce.service.Product_WatchService;
 import com.example.ecommerce.service.dto.ProductDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ public class ProductController {
     private ProductService productService;
     @Autowired
     private Category_SubService category_subService;
+
 
 
     @GetMapping("/getProductOfCategory")
@@ -63,6 +65,7 @@ public class ProductController {
         }
         return new ResponseEntity<List<ProductDTO>>(lst,HttpStatus.OK);
     }
+
     @GetMapping("/getproductsumseller")
     public ResponseEntity<List<ProductDTO>> getproductsumseller(){
         List<ProductDTO> lst=productService.findAllByProductSumseller();
