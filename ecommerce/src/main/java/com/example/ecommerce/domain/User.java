@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -38,7 +39,6 @@ public class User {
     @Column(name="linkimage")
     private String imageUrl;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name="provider")
     private AuthProvider provider;
@@ -49,17 +49,16 @@ public class User {
     @Column(name="fullname",nullable = false)
     private String fullname;
 
-
-
     @Column(name="phone")
     private String phone;
 
     @Column(name = "address")
     private String address;
 
-
-
-
+    @Column(name="role")
+    private String role;
+    @Column(name="date")
+    private Date date;
 
 
 

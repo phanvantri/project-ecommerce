@@ -26,9 +26,9 @@ public class TestController {
 
     CategoryMapper categoryMapper=new CategoryMapper();
     @GetMapping("/test")
-    public ResponseEntity<List<CategoryDTO>> getCaategory(){
-        List<CategoryDTO> list=categoryService.getCategory();
+    public ResponseEntity<List<Category>> getCaategory(){
+        List<Category> list=categoryService.getCategory();
 
-        return  new ResponseEntity<List<CategoryDTO>>(list, HttpStatus.OK);
+        return  new ResponseEntity<List<Category>>(list, HttpStatus.OK);
     }
 }

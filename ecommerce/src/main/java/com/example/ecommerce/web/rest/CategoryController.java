@@ -30,6 +30,11 @@ public class CategoryController {
         Page<Category> list=categoryService.findAllPage(page,size);
         return  new ResponseEntity<Page<Category>>(list,HttpStatus.OK);
     }
+    @GetMapping("/findAllCategory")
+    public ResponseEntity<List<Category>> findAllCategory(){
+        List<Category> lst=categoryService.getCategory();
+        return new ResponseEntity<List<Category>>(lst,HttpStatus.OK);
+    }
 
     @GetMapping("/category/{id}")
     public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable String id){

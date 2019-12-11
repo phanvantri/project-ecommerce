@@ -8,5 +8,4 @@ import java.util.List;
 
 public abstract class Abtract  {
    // public List<Object> findAllQ(String )
-
 }

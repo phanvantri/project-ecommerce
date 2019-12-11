@@ -37,7 +37,7 @@ public class Category {
 
     @Column(name="linkimage")
     private String linkimage;
-   /* @OneToMany(cascade = CascadeType.ALL,
+    @OneToMany(
             mappedBy = "category", orphanRemoval = true)
-    private List<Category_Sub> categorySub=new ArrayList<>();*/
+    private List<Category_Sub> categorySub=new ArrayList<>();
 }

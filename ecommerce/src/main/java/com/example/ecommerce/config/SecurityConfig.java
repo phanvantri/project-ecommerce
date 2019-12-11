@@ -28,9 +28,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 //@EnableWebSecurity
 @EnableGlobalMethodSecurity(
-        securedEnabled = true,
-        jsr250Enabled = true,
-        prePostEnabled = true
+        securedEnabled = true,//Cho phép phân quyền sử dụng annotation @Secured - annotation của spring
+        jsr250Enabled = true,//Cho phép phân quyền sử dụng @RoleAllow - annotation theo chuẩn JSR-250 standard của javaj
+        prePostEnabled = true//Cho phép phân quyền sử dụng annotation@PreAuthorize/@PostAuthorize - annotation của spring
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -114,6 +114,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/auth/**", "/oauth2/**","/api/**")
                 .permitAll()
+                .antMatchers("/cart/getcart","/cart/getcart/*").hasAnyRole("USER")
+                .antMatchers("/order/**").hasAnyRole("USER")
                 .anyRequest()
                 .authenticated()
                 .and()

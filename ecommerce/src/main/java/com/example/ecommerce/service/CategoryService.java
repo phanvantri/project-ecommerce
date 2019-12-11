@@ -22,9 +22,9 @@ public class CategoryService {
     public   CategoryService(){
 
     }
-    public List<CategoryDTO> getCategory(){
+    public List<Category> getCategory(){
 
-        return categoryMapper.toDto(categoryRepository.findAll());
+        return categoryRepository.findAll();
     }
     public CategoryDTO findOneById(Long id){
 

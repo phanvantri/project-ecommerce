@@ -38,6 +38,14 @@ public class ProductService {
     public Page<Product> findAllPage(int page,int size){
         Pageable pageable= PageRequest.of(page,size);//0 là trang, 2 la so phan tu
         Page<Product> lst=productRepository.findAll(pageable);
+        List<Product> a=productRepository.findAll();
+        return lst;
+    }
+
+    public Page<Product> findProductOfCategory(int idCategory,int page,int size){
+        Pageable pageable= PageRequest.of(page,size);//0 là trang, 2 la so phan tu
+        Page<Product> lst=productRepository.findAll(pageable);
+        List<Product> a=productRepository.findAll();
         return lst;
     }
     public void save(ProductDTO productDTO){
