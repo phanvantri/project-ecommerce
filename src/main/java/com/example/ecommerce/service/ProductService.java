@@ -28,9 +28,9 @@ public class ProductService {
     private ProductMapper productMapper=new ProductMapper();
 
 
-    public List<ProductDTO> findByProductNew(){
+    public List<Product> findByProductNew(){
 
-        return  productMapper.toDto(productRepository.findByProductNew());
+        return  productRepository.findByProductNew();
     }
     public List<ProductDTO> findAllByProductSumseller(){
         return productMapper.toDto(productRepository.findAllByProductSumseller());
@@ -63,6 +63,10 @@ public class ProductService {
     public Optional<Product> getdetailsProduct(Long id){
         Optional<Product> product=productRepository.findById(id);
         return product;
+    }
+
+    public List<Product> searchProduct(String name){
+        return productRepository.searchProduct(name);
     }
 
 }

@@ -39,6 +39,12 @@ public class OrderController {
         List<Order> lst=orderService.findAll();
         return new ResponseEntity<List<Order>>(lst, HttpStatus.OK);
     }
+    @GetMapping("/orderofuser")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<Order>> getOrderByUser(@CurrentUser UserPrincipal userPrincipal){
+        List<Order> lst=orderService.findByOrderOfUser(userPrincipal.getId());
+        return new ResponseEntity<List<Order>>(lst,HttpStatus.OK);
+    }
 
     @PostMapping("/addOrder")
     @PreAuthorize("hasRole('USER')")
@@ -50,7 +56,7 @@ public class OrderController {
         order.setName("Order:"+user.getName());
         order.setUser(user);
         order.setDateadd(date);
-        order.setStatus(true);
+        order.setStatus(false);
         for(Product s: product){
             totalprice+=s.getProduct_details().getPricesale();
         }

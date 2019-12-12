@@ -20,4 +20,7 @@ public class OrderService {
     public Order save(Order order){
         return orderRepository.save(order);
     }
+    public List<Order> findByOrderOfUser(Long id){
+        return orderRepository.findOrderOfUser(id);
+    }
 }

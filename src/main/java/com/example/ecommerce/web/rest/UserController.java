@@ -31,7 +31,7 @@ public class UserController {
     private Product_WatchService product_watchService;
 
     @GetMapping("/user/me")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
         UserDetails usDetail=(UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userRepository.findById(userPrincipal.getId())
@@ -46,7 +46,7 @@ public class UserController {
         }
         return new ResponseEntity<List<Product>>(lst,HttpStatus.OK);
     }
-    @GetMapping("user/updateUser")
+    @PostMapping("user/updateUser")
     @PreAuthorize("hasRole('USER')")
     public User updateUser(@RequestBody User user,@CurrentUser UserPrincipal userPrincipal){
 

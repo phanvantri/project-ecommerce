@@ -7,6 +7,9 @@ import com.example.ecommerce.service.ProductService;
 import com.example.ecommerce.service.Product_WatchService;
 import com.example.ecommerce.service.dto.ProductDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,8 +34,52 @@ public class ProductController {
     private ProductService productService;
     @Autowired
     private Category_SubService category_subService;
+    @Autowired
+    private EntityManager entityManager;
 
 
+    @GetMapping("/search")
+    public ResponseEntity<Page<Product>> searchProduct(@RequestParam String keyword,@RequestParam int page,@RequestParam int size){
+
+        //  List<Product> lstProducts=productService.findByProductNew();
+        List<Product> lstProducts=productService.searchProduct(keyword);
+        Pageable pageable;
+        if(lstProducts.size()<3){
+             pageable= PageRequest.of(0,lstProducts.size());
+        }
+        else {
+             pageable = PageRequest.of(page, size);
+        }
+        int start = Integer.parseInt(String.valueOf(pageable.getOffset()));
+        int end = (start + pageable.getPageSize()) > lstProducts.size() ? lstProducts.size() : (start + pageable.getPageSize());
+        Page<Product> pageslstProduct = new PageImpl<>(lstProducts.subList(start, end), pageable, lstProducts.size());
+        if(lstProducts.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Page<Product>>(pageslstProduct, HttpStatus.OK);
+
+    }
+  /*  @GetMapping("/search")
+    public ResponseEntity<List<Product>> searchProduct(@RequestParam String keyword,@RequestParam int page,@RequestParam int size){
+
+        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
+
+        QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()
+                .buildQueryBuilder()
+                .forEntity(Product.class)
+                .get();
+
+        org.apache.lucene.search.Query query = queryBuilder
+                .keyword()
+                .onFields("name")
+                .matching(keyword)
+                .createQuery();
+
+        org.hibernate.search.jpa.FullTextQuery jpaQuery
+                = fullTextEntityManager.createFullTextQuery(query, Product.class);
+
+         List<Product> a=jpaQuery.getResultList();
+       return new ResponseEntity<>(a,HttpStatus.OK);
+    }*/
 
     @GetMapping("/getProductOfCategory")
     public ResponseEntity<Page<Product>> getProductOfCategory(@RequestParam int idCategory,@RequestParam int page,@RequestParam int size){
@@ -57,13 +105,13 @@ public class ProductController {
         return new ResponseEntity<Page<Product>>(lstProducts, HttpStatus.OK);
     }
     @GetMapping("/getproductnew")
-    public ResponseEntity<List<ProductDTO>> getproductnew(){
+    public ResponseEntity<List<Product>> getproductnew(){
 
-        List<ProductDTO> lst=productService.findByProductNew();
+        List<Product> lst=productService.findByProductNew();
         if (lst.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<ProductDTO>>(lst,HttpStatus.OK);
+        return new ResponseEntity<List<Product>>(lst,HttpStatus.OK);
     }
 
     @GetMapping("/getproductsumseller")
