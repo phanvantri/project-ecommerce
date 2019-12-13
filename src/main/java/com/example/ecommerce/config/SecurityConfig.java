@@ -115,6 +115,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**", "/oauth2/**","/api/**")
                 .permitAll()
                 .antMatchers("/cart/getcart","/cart/getcart/*").hasAnyRole("USER")
+                .antMatchers("/order/admin/findallorder").hasAnyRole("ADMIN")
                 .antMatchers("/order/**").hasAnyRole("USER")
                 .anyRequest()
                 .authenticated()

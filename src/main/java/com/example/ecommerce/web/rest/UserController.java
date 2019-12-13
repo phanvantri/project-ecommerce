@@ -11,6 +11,7 @@ import com.example.ecommerce.service.Product_WatchService;
 import com.example.ecommerce.service.UserService;
 import com.example.ecommerce.service.dto.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,6 +30,11 @@ public class UserController {
     private UserService userService;
     @Autowired
     private Product_WatchService product_watchService;
+    @GetMapping("/user/findalluser")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Page<User>> findAllUser(@RequestParam int page, @RequestParam int size){
+        return new ResponseEntity<>( userService.findAllUser(page,size),HttpStatus.OK);
+    }
 
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
