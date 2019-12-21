@@ -47,5 +47,8 @@ public class UserService {
         javaMailSender.send(msg);
 
     }
+    public void deleteUser(Long id){
+        userRepository.deleteById(id);
+    }
 
 }

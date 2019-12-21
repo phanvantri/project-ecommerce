@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -56,5 +57,13 @@ public class CategoryController {
         Category category=categoryService.saveCategory(c);
         return new ResponseEntity<Category>(category,HttpStatus.CREATED);
     }
+    @GetMapping("/deleteCategory/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteCategory(@PathVariable String id){
+
+        categoryService.deleteCategory(Long.parseLong(id));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }

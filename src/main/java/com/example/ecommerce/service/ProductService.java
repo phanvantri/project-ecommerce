@@ -55,9 +55,8 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public void delete(ProductDTO productDTO){
-        Product product=productMapper.toEntity(productDTO);
-        productRepository.delete(product);
+    public void deleteProduct(Long id){ ;
+        productRepository.deleteById(id);
 
     }
     public Optional<Product> getdetailsProduct(Long id){

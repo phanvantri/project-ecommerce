@@ -79,4 +79,11 @@ public class UserController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    @GetMapping("/user/deleteUser/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteUser(@PathVariable String id){
+
+        userService.deleteUser(Long.parseLong(id));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

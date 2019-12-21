@@ -19,6 +19,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
@@ -131,5 +132,11 @@ public class ProductController {
     @GetMapping("/productdetail")
     public ResponseEntity<Optional<Product>> getproductdetails(@RequestParam String id){
         return new ResponseEntity<Optional<Product>>(productService.getdetailsProduct(Long.parseLong(id)),HttpStatus.OK);
+    }
+    @GetMapping("/deleteProduct/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteProduct(@PathVariable String id){
+        productService.deleteProduct(Long.parseLong(id));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
