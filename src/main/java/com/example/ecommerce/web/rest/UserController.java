@@ -4,12 +4,15 @@ import com.example.ecommerce.domain.Product;
 import com.example.ecommerce.domain.Product_Watch;
 import com.example.ecommerce.domain.User;
 import com.example.ecommerce.exception.ResourceNotFoundException;
+import com.example.ecommerce.payload.ApiResponse;
 import com.example.ecommerce.repository.UserRepository;
 import com.example.ecommerce.security.CurrentUser;
 import com.example.ecommerce.security.UserPrincipal;
 import com.example.ecommerce.service.Product_WatchService;
 import com.example.ecommerce.service.UserService;
 import com.example.ecommerce.service.dto.ProductDTO;
+import com.example.ecommerce.service.dto.UserDTO;
+import com.sun.net.httpserver.Authenticator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -17,9 +20,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -30,6 +38,9 @@ public class UserController {
     private UserService userService;
     @Autowired
     private Product_WatchService product_watchService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping("/user/findalluser")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<User>> findAllUser(@RequestParam int page, @RequestParam int size){
@@ -52,13 +63,20 @@ public class UserController {
         }
         return new ResponseEntity<List<Product>>(lst,HttpStatus.OK);
     }
-    @PostMapping("user/updateUser")
-    @PreAuthorize("hasRole('USER')")
-    public User updateUser(@RequestBody User user,@CurrentUser UserPrincipal userPrincipal){
+    @PostMapping("user/changepassword")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<?> updateUser(@RequestBody UserDTO user, @CurrentUser UserPrincipal userPrincipal){
 
+        PasswordEncoder passencoder = new BCryptPasswordEncoder();
         UserDetails usDetail=(UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        user.setPassword(usDetail.getPassword());
-        return userService.save(user);
-       // return user;
+        boolean check=passencoder.matches(user.getPassword(), usDetail.getPassword());
+        if(check==true){
+            Optional<User> numLog=userRepository.findById(userPrincipal.getId());
+            User user1=numLog.get();
+            user1.setPassword(passwordEncoder.encode(user.getPasswordnew()));
+            userService.save(user1);
+             return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
