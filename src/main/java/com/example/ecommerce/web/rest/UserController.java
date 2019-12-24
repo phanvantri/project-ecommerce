@@ -12,6 +12,7 @@ import com.example.ecommerce.service.Product_WatchService;
 import com.example.ecommerce.service.UserService;
 import com.example.ecommerce.service.dto.ProductDTO;
 import com.example.ecommerce.service.dto.UserDTO;
+import com.example.ecommerce.service.mapper.UserMapper;
 import com.sun.net.httpserver.Authenticator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,4 +88,29 @@ public class UserController {
         userService.deleteUser(Long.parseLong(id));
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @PostMapping("user/adduser")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> AddUser(@RequestBody UserDTO userDTO, @CurrentUser UserPrincipal userPrincipal){
+
+        UserMapper userMapper=new UserMapper();
+        Date date=new Date();
+        PasswordEncoder passencoder = new BCryptPasswordEncoder();
+        User user=userMapper.toEntity(userDTO);
+        user.setDate(date);
+        user.setFullname(userDTO.getName());
+        user.setPassword(passencoder.encode(userDTO.getPassword()));
+        try {
+            userService.save(user);
+            return  new ResponseEntity<>(HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+
+
+
+    }
+
+
 }

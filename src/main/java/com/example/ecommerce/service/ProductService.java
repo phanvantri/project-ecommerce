@@ -26,7 +26,10 @@ public class ProductService {
     private Category_SubRepository category_subRepository;
 
     private ProductMapper productMapper=new ProductMapper();
-
+    public Product findById(Long id){
+        Optional<Product> user= productRepository.findById(id);
+        return  user.get();
+    }
 
     public List<Product> findByProductNew(){
 

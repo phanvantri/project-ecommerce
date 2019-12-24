@@ -106,13 +106,20 @@ public class ProductController {
         return new ResponseEntity<Page<Product>>(lstProducts, HttpStatus.OK);
     }
     @GetMapping("/getproductnew")
-    public ResponseEntity<List<Product>> getproductnew(){
+    public ResponseEntity<Page<Product>> getproductnew(@RequestParam int page, @RequestParam int size){
 
-        List<Product> lst=productService.findByProductNew();
-        if (lst.isEmpty()) {
+        List<Product> lstProducts=productService.findByProductNew();
+       /* if (lst.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Product>>(lst,HttpStatus.OK);
+        return new ResponseEntity<List<Product>>(lst,HttpStatus.OK);*/
+        Pageable pageable= PageRequest.of(page,size);
+        int start = Integer.parseInt(String.valueOf(pageable.getOffset()));
+        int end = (start + pageable.getPageSize()) > lstProducts.size() ? lstProducts.size() : (start + pageable.getPageSize());
+        Page<Product> pageslstProduct = new PageImpl<>(lstProducts.subList(start, end), pageable, lstProducts.size());
+        if(lstProducts.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Page<Product>>(pageslstProduct, HttpStatus.OK);
     }
 
     @GetMapping("/getproductsumseller")
