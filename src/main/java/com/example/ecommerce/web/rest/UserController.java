@@ -99,6 +99,7 @@ public class UserController {
         user.setDate(date);
         user.setFullname(userDTO.getName());
         user.setPassword(passencoder.encode(userDTO.getPassword()));
+        user.setImageUrl(userDTO.getLinkimage());
         try {
             userService.save(user);
             return  new ResponseEntity<>(HttpStatus.OK);
