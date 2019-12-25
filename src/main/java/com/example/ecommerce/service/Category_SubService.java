@@ -32,6 +32,11 @@ public class Category_SubService {
         List<Product> lst=category_subRepository.findProductOfCategoryTest(idCategory);
         return lst;
     }
+    public List<Category_Sub> findCategory_SubByCategory(Long idCategory){
+        List<Category_Sub> lst=category_subRepository.findCategory_SubByCategory(idCategory);
+        return lst;
+    }
+
 
     public Category_SubDTO findOneById(Long id){
         return category_subMapper.toDto(category_subRepository.findOneById(id));

@@ -18,6 +18,8 @@ public interface Category_SubRepository  extends JpaRepository<Category_Sub,Long
     Page<Product> findProductOfCategory(Long id, Pageable pageable);
     @Query("select e.lstProduct from Category_Sub e where e.category.id=?1")
     List<Product> findProductOfCategoryTest(Long id);
+    @Query("select e from Category_Sub e where e.category.id=?1")
+    List<Category_Sub> findCategory_SubByCategory(Long id);
 
     Category_Sub findOneById(Long id);
 }

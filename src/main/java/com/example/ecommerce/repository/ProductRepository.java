@@ -11,7 +11,7 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product,Long> {
 
     //lay san pham moi nhat
-    @Query("select e from Product e where e.product_details.New=true ")
+    @Query("select e from Product e where e.product_details.New=true order by e.dateUpdate desc ")
     public List<Product> findByProductNew();
 
     @Query(value = "select e from Product e  order by  e.product_details.sumseller")

@@ -45,7 +45,8 @@ public class CategoryController {
     }
 
     @PostMapping(path="/addcategory")
-    public ResponseEntity<?> addCategory(@Valid @RequestBody Category c, BindingResult result){
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> addCategory(@Valid @RequestBody CategoryDTO c, BindingResult result){
         if(result.hasErrors()){
             Map<String,String> errorMap=new HashMap<>();
             for(FieldError error: result.getFieldErrors()){
@@ -54,8 +55,14 @@ public class CategoryController {
             return new ResponseEntity<Map<String,String>>(errorMap,HttpStatus.BAD_REQUEST);
         }
 
-        Category category=categoryService.saveCategory(c);
-        return new ResponseEntity<Category>(category,HttpStatus.CREATED);
+        Boolean status=categoryService.saveCategory(c);
+        if(status==true){
+            return  new ResponseEntity<>(HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
     }
     @GetMapping("/deleteCategory/{id}")
     @PreAuthorize("hasRole('ADMIN')")

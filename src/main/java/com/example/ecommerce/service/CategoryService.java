@@ -1,7 +1,9 @@
 package com.example.ecommerce.service;
 
 import com.example.ecommerce.domain.Category;
+import com.example.ecommerce.domain.Category_Sub;
 import com.example.ecommerce.repository.CategoryRepository;
+import com.example.ecommerce.repository.Category_SubRepository;
 import com.example.ecommerce.service.dto.CategoryDTO;
 import com.example.ecommerce.service.mapper.CategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +20,8 @@ import java.util.Optional;
 public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private Category_SubRepository category_subRepository;
     CategoryMapper categoryMapper=new CategoryMapper();
 
     public   CategoryService(){
@@ -37,11 +42,39 @@ public class CategoryService {
         return lst;
     }
 
-    public Category saveCategory(Category category){
-        if(category.getName().equals("") || category.getName()==null){
-            category.setName("none");
+    public boolean saveCategory(CategoryDTO categoryDTO){
+        if(categoryDTO.getName().equals("") || categoryDTO.getName()==null){
+            categoryDTO.setName("none");
         }
-        return  categoryRepository.save(category);
+        try {
+            Category category = new Category();
+            Date date=new Date();
+            category.setName(categoryDTO.getName());
+            category.setDateAdd(date);
+            category.setDateUpdate(date);
+            category.setLinkimage("https://cf.shopee.vn/file/74ca517e1fa74dc4d974e5d03c3139de_tn&quot");
+            categoryRepository.save(category);
+            for (int i = 0; i < 3; i++) {
+                Category_Sub category_sub = new Category_Sub();
+                if (i == 0) {
+                    category_sub.setName(categoryDTO.getDanhmuc1());
+                }
+                if (i == 1) {
+                    category_sub.setName(categoryDTO.getDanhmuc2());
+                }
+                if (i == 2) {
+                    category_sub.setName(categoryDTO.getDanhmuc3());
+                }
+                category_sub.setCategory(category);
+                category_subRepository.save(category_sub);
+            }
+
+
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
     public void deleteCategory(Long id ){
         categoryRepository.deleteById(id);

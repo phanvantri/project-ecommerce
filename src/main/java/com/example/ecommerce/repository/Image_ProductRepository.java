@@ -1,4 +1,9 @@
 package com.example.ecommerce.repository;
 
-public interface Image_ProductRepository {
+import com.example.ecommerce.domain.Image_Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface Image_ProductRepository extends JpaRepository<Image_Product,Long> {
 }

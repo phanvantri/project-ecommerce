@@ -6,10 +6,9 @@ import java.util.Date;
 
 @Data
 public class CategoryDTO {
-    private Long id;
     private String name;
-    private Date dateAdd;
-    private Date dateUpdate;
-    private String note;
+    private String danhmuc1;
+    private String danhmuc2;
+    private String danhmuc3;
     private String linkimage;
 }

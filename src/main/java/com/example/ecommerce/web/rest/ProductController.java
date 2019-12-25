@@ -146,4 +146,18 @@ public class ProductController {
         productService.deleteProduct(Long.parseLong(id));
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @PostMapping("/addproductbyAdmin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> addproductbyAdmin(@RequestBody ProductDTO productDTO){
+
+
+        boolean status=productService.save(productDTO);
+        if(status==true){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+    }
 }

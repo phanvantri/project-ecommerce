@@ -22,11 +22,32 @@ public class ProductDTO {
 
     private String imagephoto;
 
-    //private Category_Sub category_sub;
+    private  String description;
+
 
     private String category_subID;
 
-    private Product_Details product_details ;
+    private float price;
+
+    private float pricesale;
+
+    private String color;
+
+    private String size;
+
+    private String url;
+
+    private String url1;
+
+    private String url2;
+
+    private String url3;
+
+    private String productnew;
+
+    private int countSL;
+
+
 
 
 
