@@ -2,8 +2,10 @@ package com.example.ecommerce.web.rest;
 
 import com.example.ecommerce.domain.Category_Sub;
 import com.example.ecommerce.domain.Product;
+import com.example.ecommerce.domain.Product_Details;
 import com.example.ecommerce.service.Category_SubService;
 import com.example.ecommerce.service.ProductService;
+import com.example.ecommerce.service.Product_DetailsService;
 import com.example.ecommerce.service.Product_WatchService;
 import com.example.ecommerce.service.dto.ProductDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -33,6 +35,8 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private Product_DetailsService product_detailsService;
     @Autowired
     private Category_SubService category_subService;
     @Autowired
@@ -160,4 +164,32 @@ public class ProductController {
         }
 
     }
+    @GetMapping("admin/product/findbyid")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?>findProductbyId(@RequestParam Long id) {
+        return new ResponseEntity<>(productService.findById(id), HttpStatus.OK);
+    }
+    @PostMapping("admin/user/updateProduct")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> UpdateUser(@RequestBody ProductDTO productDTO){
+
+        Product product=productService.findById(productDTO.getId());
+        Product_Details product_details=product_detailsService.findbyId(productDTO.getIdproductdetail());
+        product.setName(productDTO.getName());
+        product_details.setDescription(productDTO.getDescription());
+        product_details.setStatus(Boolean.valueOf(productDTO.getStatus()));
+        product_details.setColor(productDTO.getColor());
+        product_details.setPrice(productDTO.getPrice());
+        product_details.setPricesale(productDTO.getPricesale());
+        product.setProduct_details(product_details);
+        try {
+            productService.updateProduct(product);
+            return  new ResponseEntity<>(HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+    }
+
 }

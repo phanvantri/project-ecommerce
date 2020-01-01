@@ -74,7 +74,8 @@ public class AuthController {
         user.setPassword(signUpRequest.getPassword());
         user.setProvider(AuthProvider.local);
         user.setImageUrl("https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png");
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+        user.setRole("ROLE_USER");
         User result = userRepository.save(user);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/user/me")

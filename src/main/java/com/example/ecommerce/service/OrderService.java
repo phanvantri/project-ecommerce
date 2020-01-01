@@ -35,9 +35,7 @@ public class OrderService {
                 +"\nBao gồm: \n"+
                 lst+"\n"+"Xem đơn hàng tại:http://localhost:3000/profile-page ."+"\n"+"Xin cảm ơn!!!!"
         );
-
         javaMailSender.send(msg);
-
     }
 
     public List<Order> findAll(){
@@ -47,10 +45,19 @@ public class OrderService {
         Pageable pageable= PageRequest.of(page,size);
         return orderRepository.findAll(pageable);
     }
+    public List<Order> findOrderByStatus(){
+        return orderRepository.findOrderStatus();
+    }
     public Order save(Order order){
         return orderRepository.save(order);
     }
     public List<Order> findByOrderOfUser(Long id){
         return orderRepository.findOrderOfUser(id);
+    }
+    public Order findById(Long id){
+        return orderRepository.findById(id).get();
+    }
+    public void deleteOrder(Long id){
+        orderRepository.deleteById(id);
     }
 }

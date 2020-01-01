@@ -12,6 +12,9 @@ import com.example.ecommerce.service.UserService;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,7 +44,7 @@ public class OrderController {
         return new ResponseEntity<List<Order>>(lst, HttpStatus.OK);
     }
     @GetMapping("/orderofuser")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<List<Order>> getOrderByUser(@CurrentUser UserPrincipal userPrincipal){
         List<Order> lst=orderService.findByOrderOfUser(userPrincipal.getId());
         return new ResponseEntity<List<Order>>(lst,HttpStatus.OK);
@@ -53,7 +56,7 @@ public class OrderController {
     }
 
     @PostMapping("/addOrder")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Order addOrder(@RequestBody List<Product> product,@CurrentUser UserPrincipal userPrincipal){
         User user=userService.findById(userPrincipal.getId());
         Date date = new Date();
@@ -82,5 +85,6 @@ public class OrderController {
 
         return objOrder;
     }
+
 
 }

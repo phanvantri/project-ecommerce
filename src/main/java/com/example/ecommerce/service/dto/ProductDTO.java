@@ -27,6 +27,8 @@ public class ProductDTO {
 
     private String category_subID;
 
+    private String status;
+
     private float price;
 
     private float pricesale;
@@ -46,6 +48,7 @@ public class ProductDTO {
     private String productnew;
 
     private int countSL;
+    private Long idproductdetail;
 
 
 

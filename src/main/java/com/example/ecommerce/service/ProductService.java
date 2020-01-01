@@ -52,15 +52,18 @@ public class ProductService {
     public Page<Product> findAllPage(int page,int size){
         Pageable pageable= PageRequest.of(page,size);//0 là trang, 2 la so phan tu
         Page<Product> lst=productRepository.findAll(pageable);
-        List<Product> a=productRepository.findAll();
         return lst;
     }
 
     public Page<Product> findProductOfCategory(int idCategory,int page,int size){
         Pageable pageable= PageRequest.of(page,size);//0 là trang, 2 la so phan tu
         Page<Product> lst=productRepository.findAll(pageable);
-        List<Product> a=productRepository.findAll();
+
         return lst;
+    }
+    public  boolean updateProduct(Product product){
+        productRepository.save(product);
+        return true;
     }
     public boolean save(ProductDTO productDTO){
        try{

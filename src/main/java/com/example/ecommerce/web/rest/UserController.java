@@ -88,6 +88,19 @@ public class UserController {
         userService.deleteUser(Long.parseLong(id));
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @PostMapping("user/updateUser")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<?> UpdateUser(@RequestBody User user, @CurrentUser UserPrincipal userPrincipal){
+
+
+        try {
+            return  new ResponseEntity<>(userService.save(user),HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+    }
     @PostMapping("user/adduser")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> AddUser(@RequestBody UserDTO userDTO, @CurrentUser UserPrincipal userPrincipal){
@@ -108,8 +121,30 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
+    }
+    @GetMapping("admin/user/findbyid")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?>findUserbyId(@RequestParam Long id) {
+        return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
+    }
+    @PostMapping("admin/user/updateUser")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> UpdateUser(@RequestBody User userDTO){
 
-
+        Date date=new Date();
+        User user=userRepository.findById(userDTO.getId()).get();
+        user.setName(userDTO.getName());
+        user.setRole(userDTO.getRole());
+        user.setAddress(userDTO.getAddress());
+        user.setPhone(userDTO.getPhone());
+        user.setDate(date);
+        try {
+            userService.save(user);
+            return  new ResponseEntity<>(HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
 
     }
 

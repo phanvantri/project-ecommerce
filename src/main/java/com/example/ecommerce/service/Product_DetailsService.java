@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class Product_DetailsService {
@@ -20,6 +21,10 @@ public class Product_DetailsService {
         return product_detailsMapper.toDto(product_detailsRepository.findByIdProduct(id));
     }
 
+    public Product_Details findbyId(Long id){
+        Optional<Product_Details> product_details=product_detailsRepository.findById(id);
+        return product_details.get();
+    }
     public List<Product_Details> findAll(){
         return product_detailsRepository.findAll();
     }

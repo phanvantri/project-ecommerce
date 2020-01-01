@@ -11,4 +11,7 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("select e from Order e where e.user.id=?1 order by e.id desc     ")
     List<Order> findOrderOfUser(Long id);
+
+    @Query("select e from Order e where e.status=false ")
+    List<Order> findOrderStatus();
 }
