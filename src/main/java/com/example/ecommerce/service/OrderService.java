@@ -3,7 +3,11 @@ package com.example.ecommerce.service;
 import com.example.ecommerce.domain.Order;
 import com.example.ecommerce.domain.Product;
 import com.example.ecommerce.domain.User;
+import com.example.ecommerce.model.ChartProduct;
 import com.example.ecommerce.repository.OrderRepository;
+import com.example.ecommerce.repository.OrdersItemRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +17,11 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,7 +30,11 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
+    OrdersItemRepository ordersItemRepository;
+    @Autowired
     private JavaMailSender javaMailSender;
+    @Autowired
+    private EntityManager entityManager;
     public void sendEmail(Order order, List<Product> products, User user) {
         String lst="";
         for(Product s:products){
@@ -60,4 +73,25 @@ public class OrderService {
     public void deleteOrder(Long id){
         orderRepository.deleteById(id);
     }
+
+   public List<Order> countOrderByDate(Date start, Date end){
+        return orderRepository.countOrderByDate(start, end);
+   }
+
+   public List<ChartProduct> countProductOrderTop(){
+        List<ChartProduct> chartProducts = new ArrayList<>();
+
+      Object [] cp = ordersItemRepository.countProductTop();
+      for(int i =0;i< cp.length;i++){
+          ChartProduct c = new ChartProduct();
+          Object [] tt = (Object[]) cp[i];
+          c.setName(tt[0].toString());
+          c.setCount(Long.valueOf(tt[1].toString()));
+          chartProducts.add(c);
+      }
+
+
+      return  chartProducts;
+   }
+
 }

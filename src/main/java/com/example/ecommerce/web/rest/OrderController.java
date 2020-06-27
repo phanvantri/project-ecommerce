@@ -76,9 +76,8 @@ public class OrderController {
             OrdersItem obj=new OrdersItem();
             obj.setProduct(s);
             obj.setIdorder(objOrder.getId());
+            obj.setDateAdd( new Date());
             ordersItemService.save(obj);
-
-
         }
         orderService.sendEmail(objOrder,product,user);
 

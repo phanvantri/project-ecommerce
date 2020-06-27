@@ -1,12 +1,12 @@
 
 spring:
   datasource:
-#    url: jdbc:mysql://localhost:3306/ecommerce?allowPublicKeyRetrieval=true&0useSSL=false
-#    username: root
-#    password: 2105
-    url: jdbc:mysql://den1.mysql1.gear.host:3306/projectecomerce?allowPublicKeyRetrieval=true&0useSSL=false
-    username: projectecomerce
-    password: 21051998@
+    url: jdbc:mysql://localhost:3306/ecommerce?allowPublicKeyRetrieval=true&0useSSL=false
+    username: root
+    password: 2105
+#    url: jdbc:mysql://den1.mysql1.gear.host:3306/projectecomerce?allowPublicKeyRetrieval=true&0useSSL=false
+#    username: projectecomerce
+#    password: 21051998@
 
   jpa:
     show-sql: true
@@ -28,8 +28,8 @@ spring:
               - email
               - profile
           facebook:
-            clientId: 2417379768589755
-            clientSecret: 8e1ddc590ba226811d027bb5d3bc5ae0
+            clientId: 596706207923083
+            clientSecret: eb6f24d13ebc950460bbbf3340c0cb17
             redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email

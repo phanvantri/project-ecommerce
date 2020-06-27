@@ -3,6 +3,8 @@ package com.example.ecommerce.domain;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name="ordersitem")
@@ -19,5 +21,8 @@ public class OrdersItem {
 
     @Column(name="idorder")
     private Long idorder;
+
+    @Column(name = "dateadd")
+    private Date dateAdd;
 
 }
