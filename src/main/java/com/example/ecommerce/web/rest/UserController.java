@@ -14,6 +14,7 @@ import com.example.ecommerce.service.dto.ProductDTO;
 import com.example.ecommerce.service.dto.UserDTO;
 import com.example.ecommerce.service.mapper.UserMapper;
 import com.sun.net.httpserver.Authenticator;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
+import java.security.SignatureException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +59,17 @@ public class UserController {
         return userRepository.findById(userPrincipal.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
     }
+    @GetMapping("/getcurrentuser")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public Current getCurrent(@CurrentUser UserPrincipal userPrincipal) {
+        UserDetails usDetail=(UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findById(userPrincipal.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+        Current current = new Current();
+        current.setId(user.getId());
+        current.setUsername(user.getName());
+        return  current;
+}
     @GetMapping("/user/getproductwatch")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<Product>> getproductwatch(@CurrentUser UserPrincipal userPrincipal){
@@ -146,6 +160,11 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
+    }
+    @Data
+    private class Current{
+        private Long id;
+        private  String username;
     }
 
 
