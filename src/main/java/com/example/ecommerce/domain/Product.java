@@ -17,7 +17,6 @@ import java.util.List;
 @Entity
 @Table(name="product")
 @Data
-@Indexed
 public class Product {
 
     @Id

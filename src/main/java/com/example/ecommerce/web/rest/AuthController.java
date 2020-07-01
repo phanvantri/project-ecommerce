@@ -96,14 +96,14 @@ public class AuthController {
         Optional<User> numLog=userRepository.findByEmail(user.getEmail());
         User user1=numLog.get();
         user1.setPassword(passwordEncoder.encode(saltStr));
-        try{
+       // try{
             userService.sendEmail(user1,saltStr);
             userService.save(user1);
             return new ResponseEntity<>(HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+       // }
+//        catch (Exception e){
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
 
     }
 

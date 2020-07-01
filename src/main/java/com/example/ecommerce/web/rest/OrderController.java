@@ -5,10 +5,15 @@ import com.example.ecommerce.domain.OrdersItem;
 import com.example.ecommerce.domain.Product;
 import com.example.ecommerce.domain.User;
 import com.example.ecommerce.security.CurrentUser;
+import com.example.ecommerce.security.EncyptData;
 import com.example.ecommerce.security.UserPrincipal;
 import com.example.ecommerce.service.OrderService;
 import com.example.ecommerce.service.OrdersItemService;
 import com.example.ecommerce.service.UserService;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Data;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,7 +63,7 @@ public class OrderController {
 
     @PostMapping("/addOrder")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public Order addOrder(@RequestBody List<Product> product,@CurrentUser UserPrincipal userPrincipal){
+    public String addOrder(@RequestBody List<Product> product,@CurrentUser UserPrincipal userPrincipal){
         User user=userService.findById(userPrincipal.getId());
         Date date = new Date();
         Order order=new Order();
@@ -80,9 +86,29 @@ public class OrderController {
             ordersItemService.save(obj);
         }
         orderService.sendEmail(objOrder,product,user);
+        InforOrder inforOrder = new InforOrder();
+        inforOrder.setIdOrder(objOrder.getId());
+        inforOrder.setIdUser(user.getId());
+        inforOrder.setTotalprice(totalprice);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonInString ="";
+        try {
+             jsonInString = mapper.writeValueAsString(inforOrder);
 
-
-        return objOrder;
+        } catch (JsonGenerationException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  EncyptData.encrypt(jsonInString);
+    }
+    @Data
+    private class InforOrder{
+        private Long idOrder;
+        private Long idUser;
+        private int totalprice;
     }
 
 

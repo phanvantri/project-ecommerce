@@ -43,7 +43,7 @@ public class UserService {
         msg.setText("Xin chào:"+user.getName()+" \n Mật khẩu đăng nhập tạm thời:"+password+"."+ "\n"
              + "Vui lòng đổi lại mật khẩu cho bạn" +"\n"+"Xin cảm ơn!!!"
         );
-
+        msg.setFrom("myenglish20191998@gmail.com");
         javaMailSender.send(msg);
 
     }
