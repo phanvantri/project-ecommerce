@@ -38,5 +38,8 @@ public class Order {
     @Column(name="status")
     private Boolean status;
 
+    @Column(name="qrcode")
+    private String qrCode;
+
 
 }

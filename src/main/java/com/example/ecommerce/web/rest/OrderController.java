@@ -102,7 +102,10 @@ public class OrderController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  EncyptData.encrypt(jsonInString);
+        String encrypt =  EncyptData.encrypt(jsonInString);
+        objOrder.setQrCode(encrypt);
+        orderService.save(objOrder);
+        return  encrypt;
     }
     @Data
     private class InforOrder{
