@@ -17,7 +17,7 @@ public class BankUser {
     private Long id;
 
     @Column(name="money")
-    private Double money;
+    private Long money;
 
     @ManyToOne(fetch = FetchType.LAZY) //FetchType.EAGER lay tat ca doi tuong lien quan (vd: Lay duoc object danh muc)// FetchType.EAGER khong lay cac doi tuong lien quan
     @JoinColumn(name="iduser")

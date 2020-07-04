@@ -93,5 +93,8 @@ public class OrderService {
 
       return  chartProducts;
    }
+   public Order getById(Long id){
+        return  orderRepository.findById(id).get();
+   }
 
 }

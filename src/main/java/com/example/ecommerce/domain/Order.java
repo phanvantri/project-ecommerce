@@ -41,5 +41,7 @@ public class Order {
     @Column(name="qrcode")
     private String qrCode;
 
+    @Column(name="bank")
+    private boolean  bank;
 
 }
