@@ -10,6 +10,7 @@ import com.example.ecommerce.security.UserPrincipal;
 import com.example.ecommerce.service.OrderService;
 import com.example.ecommerce.service.OrdersItemService;
 import com.example.ecommerce.service.UserService;
+import com.example.ecommerce.service.dto.InforOrder;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -107,12 +108,5 @@ public class OrderController {
         orderService.save(objOrder);
         return  encrypt;
     }
-    @Data
-    private class InforOrder{
-        private Long idOrder;
-        private Long idUser;
-        private int totalprice;
-    }
-
 
 }
