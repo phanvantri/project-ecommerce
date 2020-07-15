@@ -24,6 +24,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Transient
+    private Long soluong;
 
     @Column(name="name")
     @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)

@@ -38,7 +38,7 @@ public class OrderService {
     public void sendEmail(Order order, List<Product> products, User user) {
         String lst="";
         for(Product s:products){
-             lst+="Tên sản phẩm:"+s.getName()+"-"+"Giá tiền:"+s.getProduct_details().getPricesale()+" đồng"+"\n";
+             lst+="Tên sản phẩm:"+s.getName()+"-"+"Số lương:"+s.getSoluong()+"-"+"Giá tiền:"+s.getProduct_details().getPricesale()*s.getSoluong()+" đồng"+"\n";
         }
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(user.getEmail());

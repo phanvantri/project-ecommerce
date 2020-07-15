@@ -43,8 +43,8 @@ public class TestController {
 //        return  new ResponseEntity<List<Category>>(list, HttpStatus.OK);
 //    }
         @GetMapping("/test")
-        public List<ChartProduct> getCaategory(){
-            return orderService.countProductOrderTop();
+        public String getCaategory(){
+            return "123";
         }
     @GetMapping("/getorderbydate")
     public ResponseEntity<List<OrdersItem>> getOrderbydate(){

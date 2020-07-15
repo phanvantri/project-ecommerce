@@ -4,6 +4,7 @@ import com.example.ecommerce.domain.Order;
 import com.example.ecommerce.domain.OrdersItem;
 import com.example.ecommerce.domain.Product;
 import com.example.ecommerce.domain.User;
+import com.example.ecommerce.model.ProductModel;
 import com.example.ecommerce.security.CurrentUser;
 import com.example.ecommerce.security.EncyptData;
 import com.example.ecommerce.security.UserPrincipal;
@@ -64,7 +65,7 @@ public class OrderController {
 
     @PostMapping("/addOrder")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public String addOrder(@RequestBody List<Product> product,@CurrentUser UserPrincipal userPrincipal){
+    public String addOrder(@RequestBody List<Product> product, @CurrentUser UserPrincipal userPrincipal){
         User user=userService.findById(userPrincipal.getId());
         Date date = new Date();
         Order order=new Order();
@@ -74,7 +75,7 @@ public class OrderController {
         order.setDateadd(date);
         order.setStatus(false);
         for(Product s: product){
-            totalprice+=s.getProduct_details().getPricesale();
+            totalprice+=s.getProduct_details().getPricesale()*s.getSoluong();
         }
         order.setTotalprice(Long.parseLong(String.valueOf(totalprice)));
       Order objOrder=orderService.save(order);
