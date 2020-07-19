@@ -50,6 +50,19 @@ public class Product_Details {
     @Column(name="new")
     private Boolean New;
 
+    @Column(name="detail")
+    private String detail;
+
+    @Column(name="detail_1")
+    private String detail_1;
+
+    @Column(name="detail_2")
+    private String detail_2;
+
+    @Column(name="detail_3")
+    private String detail_3;
+
+
     @OneToMany(cascade = CascadeType.ALL,
             mappedBy = "product", orphanRemoval = true,fetch = FetchType.EAGER)
     private List<Image_Product> lstImage=new ArrayList<>();

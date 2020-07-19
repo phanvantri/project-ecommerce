@@ -2,6 +2,7 @@ package com.example.ecommerce.web.rest;
 
 import com.example.ecommerce.domain.*;
 import com.example.ecommerce.repository.BankUserRepository;
+import com.example.ecommerce.repository.CardRepository;
 import com.example.ecommerce.repository.UserRepository;
 import com.example.ecommerce.security.CurrentUser;
 import com.example.ecommerce.security.EncyptData;
@@ -35,6 +36,8 @@ public class AppController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private CardRepository cardRepository;
+    @Autowired
     private JavaMailSender javaMailSender;
     public void sendEmail(List<String> product , User user, Long money, Long moneyCl) {
         String lst="";
@@ -50,6 +53,28 @@ public class AppController {
                 lst+"\n"+ "Số tiền còn lại trong tài khoản:" +moneyCl +"đồng."+ "\n"+"Xin cảm ơn!!!!"
         );
         javaMailSender.send(msg);
+    }
+    @GetMapping("/sendmoney")
+    public boolean sendMoney(@RequestParam String code, @CurrentUser UserPrincipal userPrincipal){
+        int a=1;
+        try {
+            Card card = cardRepository.getOne(code);
+            if (card!= null && card.getActive() == true) {
+                BankUser bankUser = bankUserRepository.getBankUserByUserBank(userPrincipal.getId());
+                Long money = bankUser.getMoney();
+                bankUser.setMoney(money + card.getMoney());
+                bankUserRepository.save(bankUser);
+                card.setActive(false);
+                cardRepository.save(card);
+                return true;
+            }
+        }
+        catch (Exception e){
+            return false;
+        }
+        return false;
+
+
     }
     @GetMapping ("/bank")
     public boolean getBank(@RequestParam Long idOrder,@CurrentUser UserPrincipal userPrincipal){
@@ -85,6 +110,8 @@ public class AppController {
         Information information = new Information();
         information.setUsername(user.getName());
         information.setEmail(user.getEmail());
+        information.setAddress(user.getAddress());
+        information.setPhone(user.getPhone());
         information.setMoney(bankUser.getMoney());
         information.setImagePath(user.getImageUrl());
         return information;
@@ -103,11 +130,12 @@ public class AppController {
         }
         Order o1 = orderService.getById(emp2.getIdOrder());
         ModelQrcode m = new ModelQrcode();
+        m.setIdOrder(emp2.getIdOrder());
         m.setUsername(o1.getName());
         m.setTimeOrder(o1.getDateadd());
         List<String> product = new ArrayList<>();
         for(OrdersItem a : o1.getLstOrder()){
-            product.add(a.getProduct().getName() + ":" + a.getProduct().getProduct_details().getPricesale());
+            product.add(a.getProduct().getName() + " Số tiền: " + a.getProduct().getProduct_details().getPricesale() +" đồng");
         }
         m.setProduct(product);
         m.setTotalPrice(o1.getTotalprice());
@@ -118,6 +146,7 @@ public class AppController {
 
     @Data
     private class ModelQrcode{
+        private Long idOrder;
         private String username;
         private Long totalPrice;
         private boolean bank;
@@ -131,6 +160,8 @@ public class AppController {
         private String username;
         private Long money;
         private String email;
+        private String address;
+        private String phone;
         private String imagePath;
 
     }
