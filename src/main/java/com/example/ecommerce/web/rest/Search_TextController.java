@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -26,6 +28,7 @@ public class Search_TextController {
     public ResponseEntity<Page<Order>> findAllOrders(@RequestParam int page, @RequestParam int size){
 
         List<Order> lst=orderService.findOrderByStatus();
+        Collections.sort(lst,Collections.reverseOrder(Comparator.comparing(Order::getDateadd)));
         if(!lst.isEmpty()) {
             Pageable pageable;
             if (lst.size() < 3) {
@@ -39,7 +42,7 @@ public class Search_TextController {
 
 
 
-                return new ResponseEntity<Page<Order>>(pages, HttpStatus.OK);
+            return new ResponseEntity<Page<Order>>(pages, HttpStatus.OK);
 
         }
         else {
@@ -52,6 +55,7 @@ public class Search_TextController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> successorder(@PathVariable String id){
         Order order=orderService.findById(Long.parseLong(id));
+        order.setBank(true);
         order.setStatus(true);
         orderService.save(order);
         return new ResponseEntity<>(HttpStatus.OK);
