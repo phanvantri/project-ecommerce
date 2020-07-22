@@ -27,6 +27,8 @@ public class Product {
 
     @Transient
     private Long soluong;
+    @Transient
+    private Long fee;
 
     @Column(name="name")
     @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)

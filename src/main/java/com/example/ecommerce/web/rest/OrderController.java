@@ -69,15 +69,17 @@ public class OrderController {
         User user=userService.findById(userPrincipal.getId());
         Date date = new Date();
         Order order=new Order();
-        int totalprice=0;
+        long totalprice=0;
         order.setName("Order:"+user.getName());
         order.setUser(user);
         order.setDateadd(date);
         order.setStatus(false);
+        long fee = product.get(0).getFee();
+
         for(Product s: product){
             totalprice+=s.getProduct_details().getPricesale()*s.getSoluong();
         }
-        order.setTotalprice(Long.parseLong(String.valueOf(totalprice)));
+        order.setTotalprice(Long.parseLong(String.valueOf(totalprice))+fee);
       Order objOrder=orderService.save(order);
       //set orders item
         for(Product s: product){
@@ -87,11 +89,11 @@ public class OrderController {
             obj.setDateAdd( new Date());
             ordersItemService.save(obj);
         }
-        orderService.sendEmail(objOrder,product,user);
+        orderService.sendEmail(objOrder,product,user,fee);
         InforOrder inforOrder = new InforOrder();
         inforOrder.setIdOrder(objOrder.getId());
         inforOrder.setIdUser(user.getId());
-        inforOrder.setTotalprice(totalprice);
+        inforOrder.setTotalprice(Integer.parseInt(String.valueOf(totalprice+fee)));
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString ="";
         try {

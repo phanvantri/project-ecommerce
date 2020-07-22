@@ -35,10 +35,10 @@ public class OrderService {
     private JavaMailSender javaMailSender;
     @Autowired
     private EntityManager entityManager;
-    public void sendEmail(Order order, List<Product> products, User user) {
+    public void sendEmail(Order order, List<Product> products, User user, long fee) {
         String lst="";
         for(Product s:products){
-             lst+="Tên sản phẩm:"+s.getName()+"-"+"Số lương:"+s.getSoluong()+"-"+"Giá tiền:"+s.getProduct_details().getPricesale()*s.getSoluong()+" đồng"+"\n";
+             lst+=""+s.getName()+"   -   "+"Số lương:"+s.getSoluong()+"    -    "+"Giá tiền:"+s.getProduct_details().getPricesale()*s.getSoluong()+" đồng"+"\n";
         }
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(user.getEmail());
@@ -46,7 +46,7 @@ public class OrderService {
         msg.setSubject("Xác nhận thông tin đặt hàng.");
         msg.setText("Xin chào:"+user.getName()+" \nTổng số tiền phải thanh toán là:"+order.getTotalprice()+"đồng."
                 +"\nBao gồm: \n"+
-                lst+"\n"+"Xem đơn hàng tại:http://localhost:3000/profile-page ."+"\n"+"Xin cảm ơn!!!!"
+                lst+"\n"+"Trong đó, phí ship hàng là: " +fee +"đồng \n"+"Xem đơn hàng tại thông tin cá nhân."+"\n"+"Xin cảm ơn!!!!"
         );
         javaMailSender.send(msg);
     }
