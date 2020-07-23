@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -50,7 +51,7 @@ public class ProductService {
         return productMapper.toDto(productRepository.findAllByProductSumseller());
     }
     public Page<Product> findAllPage(int page,int size){
-        Pageable pageable= PageRequest.of(page,size);//0 là trang, 2 la so phan tu
+        Pageable pageable= PageRequest.of(page,size, Sort.by("dateAdd").descending());//0 là trang, 2 la so phan tu
         Page<Product> lst=productRepository.findAll(pageable);
         return lst;
     }
@@ -84,6 +85,10 @@ public class ProductService {
            product_details.setProduct(product1);
            product_details.setDescription(product_details.getDescription());
            product_details.setColor(productDTO.getColor());
+           product_details.setDetail(productDTO.getDetail());
+           product_details.setDetail_1(productDTO.getDetail_1());
+           product_details.setDetail_2(productDTO.getDetail_2());
+           product_details.setDetail_3(productDTO.getDetail_3());
            if(productDTO.getProductnew().equals("1")){
                product_details.setNew(true);
            }

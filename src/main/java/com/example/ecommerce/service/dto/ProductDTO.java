@@ -19,6 +19,10 @@ public class ProductDTO {
     private Date dateAdd;
 
     private Date dateUpdate;
+    private String detail;
+    private String detail_1;
+    private String detail_2;
+    private String detail_3;
 
     private String imagephoto;
 

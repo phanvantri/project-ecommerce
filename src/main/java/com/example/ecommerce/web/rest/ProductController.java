@@ -178,6 +178,7 @@ public class ProductController {
         product.setName(productDTO.getName());
         product_details.setDescription(productDTO.getDescription());
         product_details.setStatus(Boolean.valueOf(productDTO.getStatus()));
+        product_details.setNew(Boolean.valueOf(productDTO.getStatus()));
         product_details.setColor(productDTO.getColor());
         product_details.setPrice(productDTO.getPrice());
         product_details.setPricesale(productDTO.getPricesale());
