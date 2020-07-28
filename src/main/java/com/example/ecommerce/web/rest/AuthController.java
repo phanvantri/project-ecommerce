@@ -64,7 +64,7 @@ public class AuthController {
     @PostMapping("/login1")
     public ResponseEntity<?> login1(@Valid @RequestBody LoginRequest loginRequest) {
 
-        String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMiIsImlhdCI6MTU5NDgyMzI3MiwiZXhwIjoxNTk1Njg3MjcyfQ.j-qUDgmzs-KC4FnXf2WqeBiVoAGKBV5jk4Q5y17BoohawB3lTJDihqZBdsIuetjP_WDQ1II7VsbMfjPKXHQCcQ";
+        String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNiIsImlhdCI6MTU5NTUxMTEwMiwiZXhwIjoxNTk2Mzc1MTAyfQ.VidLk3ycGDu-OR3Y-RiQP_Mj5KdY2TlBJZ20RUtKd1WdyDkIZTFiXMWqnWsg3kkado0AaNEDriuQTwbPoeeORw";
         return ResponseEntity.ok(new AuthResponse(token));
     }
 

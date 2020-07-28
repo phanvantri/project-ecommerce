@@ -22,22 +22,21 @@ public class DashBoardController {
     @Autowired
     private OrderService orderService;
     @GetMapping("/countorderoneweek")
-    public List<Chart> countOrderByWeek(){
+    public List<BarChart> countOrderByWeek(){
         ZoneId defaultZoneId = ZoneId.systemDefault();
         LocalDate localDate = java.time.LocalDate.now();
-        List<Chart> chart = new ArrayList<>();
+        List<BarChart> chart = new ArrayList<>();
         for(int i = 1; i<= 7 ;i++){
-            Chart c = new Chart();
-            c.setId(i);
-            c.setDate(localDate);
+            BarChart c = new BarChart();
+            c.setLabel(localDate);
             Date dateStart = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
             Date dateEnd =  Date.from(localDate.minusDays(-1).atStartOfDay(defaultZoneId).toInstant());
-            c.setCount(orderService.countOrderByDate(dateStart,dateEnd).size());
+            c.setY(orderService.countOrderByDate(dateStart,dateEnd).size());
             chart.add(c);
             localDate = localDate.minusDays(1);
         }
-        Collections.sort(chart,Comparator.comparing(Chart::getDate));
-        return chart;
+        Collections.sort(chart,Comparator.comparing(BarChart::getLabel));
+       return chart;
     }
     @GetMapping("/summoneyoneweek")
     public List<Chart> sumMoneyOneWeek(){
@@ -46,8 +45,7 @@ public class DashBoardController {
         List<Chart> chart = new ArrayList<>();
         for(int i = 1; i<= 7 ;i++){
             Chart c = new Chart();
-            c.setId(i);
-            c.setDate(localDate);
+            c.setX(localDate);
             Date dateStart = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
             Date dateEnd =  Date.from(localDate.minusDays(-1).atStartOfDay(defaultZoneId).toInstant());
             int sum = 0;
@@ -56,11 +54,11 @@ public class DashBoardController {
                 sum += s.getTotalprice();
             }
 
-            c.setCount(sum/1000);
+            c.setY(sum/1000);
             chart.add(c);
             localDate = localDate.minusDays(1);
         }
-        Collections.sort(chart,Comparator.comparing(Chart::getDate));
+        Collections.sort(chart,Comparator.comparing(Chart::getX));
         return chart;
     }
     @GetMapping("/countproducttop")
@@ -70,8 +68,12 @@ public class DashBoardController {
 
     @Data
     private class Chart{
-        private int id;
-        private LocalDate date;
-        private  int count;
+        private LocalDate x;
+        private  int y;
+    }
+    @Data
+    private class BarChart{
+        private LocalDate label;
+        private  int y;
     }
 }

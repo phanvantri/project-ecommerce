@@ -44,7 +44,7 @@ public class ProductController {
 
 
     @GetMapping("/search")
-    public ResponseEntity<Page<Product>> searchProduct(@RequestParam String keyword,@RequestParam int page,@RequestParam int size){
+    public ResponseEntity<Page<Product>> searchProduct(@RequestParam() String keyword,@RequestParam int page,@RequestParam int size){
 
         //  List<Product> lstProducts=productService.findByProductNew();
         List<Product> lstProducts=productService.searchProduct(keyword);

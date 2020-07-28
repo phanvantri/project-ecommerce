@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ChartProduct {
-    private String name;
-    private Long count;
+    private String label;
+    private Long y;
 
 }

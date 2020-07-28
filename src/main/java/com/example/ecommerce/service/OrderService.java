@@ -85,8 +85,8 @@ public class OrderService {
       for(int i =0;i< cp.length;i++){
           ChartProduct c = new ChartProduct();
           Object [] tt = (Object[]) cp[i];
-          c.setName(tt[0].toString());
-          c.setCount(Long.valueOf(tt[1].toString()));
+          c.setLabel(tt[0].toString());
+          c.setY(Long.valueOf(tt[1].toString()));
           chartProducts.add(c);
       }
 
