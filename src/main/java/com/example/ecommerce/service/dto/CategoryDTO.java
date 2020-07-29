@@ -10,5 +10,9 @@ public class CategoryDTO {
     private String danhmuc1;
     private String danhmuc2;
     private String danhmuc3;
-    private String linkimage;
+    private String url;
+    private String linkimage1;
+    private String linkimage2;
+    private String linkimage3;
+
 }

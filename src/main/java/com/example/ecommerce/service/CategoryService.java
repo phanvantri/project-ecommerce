@@ -52,18 +52,21 @@ public class CategoryService {
             category.setName(categoryDTO.getName());
             category.setDateAdd(date);
             category.setDateUpdate(date);
-            category.setLinkimage("https://cf.shopee.vn/file/74ca517e1fa74dc4d974e5d03c3139de_tn&quot");
+            category.setLinkimage(categoryDTO.getUrl());
             categoryRepository.save(category);
             for (int i = 0; i < 3; i++) {
                 Category_Sub category_sub = new Category_Sub();
                 if (i == 0) {
                     category_sub.setName(categoryDTO.getDanhmuc1());
+                    category_sub.setLinkimage(categoryDTO.getLinkimage1());
                 }
                 if (i == 1) {
                     category_sub.setName(categoryDTO.getDanhmuc2());
+                    category_sub.setLinkimage(categoryDTO.getLinkimage2());
                 }
                 if (i == 2) {
                     category_sub.setName(categoryDTO.getDanhmuc3());
+                    category_sub.setLinkimage(categoryDTO.getLinkimage3());
                 }
                 category_sub.setCategory(category);
                 category_subRepository.save(category_sub);
