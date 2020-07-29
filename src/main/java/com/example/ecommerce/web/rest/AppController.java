@@ -9,8 +9,10 @@ import com.example.ecommerce.security.EncyptData;
 import com.example.ecommerce.security.UserPrincipal;
 import com.example.ecommerce.service.OrderService;
 import com.example.ecommerce.service.dto.InforOrder;
+import com.example.ecommerce.util.RamdomString;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
+import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -37,6 +39,18 @@ public class AppController {
     private UserRepository userRepository;
     @Autowired
     private CardRepository cardRepository;
+    @GetMapping("/gerateCode/{money}")
+    public Card generateCode(@PathVariable Long money){
+        Card card = new Card();
+        card.setActive(true);
+        card.setMoney(money);
+        String code = RamdomString.getSaltString();
+        card.setCode(code);
+        cardRepository.save(card);
+        return card;
+
+    }
+
     @Autowired
     private JavaMailSender javaMailSender;
     public void sendEmail(List<String> product , User user, Long money, Long moneyCl) {
@@ -56,7 +70,6 @@ public class AppController {
     }
     @GetMapping("/sendmoney")
     public boolean sendMoney(@RequestParam String code, @CurrentUser UserPrincipal userPrincipal){
-        int a=1;
         try {
             Card card = cardRepository.getOne(code);
             if (card!= null && card.getActive() == true) {
@@ -64,8 +77,7 @@ public class AppController {
                 Long money = bankUser.getMoney();
                 bankUser.setMoney(money + card.getMoney());
                 bankUserRepository.save(bankUser);
-                card.setActive(false);
-                cardRepository.save(card);
+                cardRepository.delete(card);
                 return true;
             }
         }
