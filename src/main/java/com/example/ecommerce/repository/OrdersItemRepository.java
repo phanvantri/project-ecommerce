@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface OrdersItemRepository extends JpaRepository<OrdersItem,Long> {
 
     @Query("select distinct b.name , count (a) as SL from OrdersItem a join  Product b on b.id = a.product.id " +
-            "group by b.name")
+            " group by b.name order by SL desc")
     Object[] countProductTop();
 }

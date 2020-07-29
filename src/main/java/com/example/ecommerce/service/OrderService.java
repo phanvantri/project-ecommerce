@@ -82,7 +82,7 @@ public class OrderService {
         List<ChartProduct> chartProducts = new ArrayList<>();
 
       Object [] cp = ordersItemRepository.countProductTop();
-      for(int i =0;i< cp.length;i++){
+      for(int i =0;i< 10;i++){
           ChartProduct c = new ChartProduct();
           Object [] tt = (Object[]) cp[i];
           c.setLabel(tt[0].toString());
