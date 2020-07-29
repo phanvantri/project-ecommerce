@@ -14,17 +14,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.http.HTTPException;
 import java.io.IOException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -40,11 +43,17 @@ public class AppController {
     @Autowired
     private CardRepository cardRepository;
     @GetMapping("/gerateCode/{money}")
-    public Card generateCode(@PathVariable Long money){
+    public Card generateCode(@PathVariable Long money) throws Exception {
         Card card = new Card();
         card.setActive(true);
         card.setMoney(money);
+
         String code = RamdomString.getSaltString();
+        Optional<Card> c = cardRepository.findById(code);
+        while (c.isPresent()){
+            code = RamdomString.getSaltString();
+            c = cardRepository.findById(code);
+        }
         card.setCode(code);
         cardRepository.save(card);
         return card;
