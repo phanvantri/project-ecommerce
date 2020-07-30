@@ -105,10 +105,13 @@ public class UserController {
     @PostMapping("user/updateUser")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<?> UpdateUser(@RequestBody User user, @CurrentUser UserPrincipal userPrincipal){
-
+        Optional<User> entity = userRepository.findById(user.getId());
 
         try {
-            return  new ResponseEntity<>(userService.save(user),HttpStatus.OK);
+            if(entity.isPresent()){
+                return  new ResponseEntity<>(userService.save(entity.get()),HttpStatus.OK);
+            }
+
         }
         catch (Exception e){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
