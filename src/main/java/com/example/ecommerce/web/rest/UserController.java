@@ -48,108 +48,112 @@ public class UserController {
 
     @GetMapping("/user/findalluser")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Page<User>> findAllUser(@RequestParam int page, @RequestParam int size){
-        return new ResponseEntity<>( userService.findAllUser(page,size),HttpStatus.OK);
+    public ResponseEntity<Page<User>> findAllUser(@RequestParam int page, @RequestParam int size) {
+        return new ResponseEntity<>(userService.findAllUser(page, size), HttpStatus.OK);
     }
 
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
-        UserDetails usDetail=(UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails usDetail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userRepository.findById(userPrincipal.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
     }
+
     @GetMapping("/getcurrentuser")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Current getCurrent(@CurrentUser UserPrincipal userPrincipal) {
-        UserDetails usDetail=(UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails usDetail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findById(userPrincipal.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
         Current current = new Current();
         current.setId(user.getId());
         current.setUsername(user.getName());
-        return  current;
-}
+        return current;
+    }
+
     @GetMapping("/user/getproductwatch")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<Product>> getproductwatch(@CurrentUser UserPrincipal userPrincipal){
-        List<Product> lst=product_watchService.findProductByUser(userPrincipal.getId());
+    public ResponseEntity<List<Product>> getproductwatch(@CurrentUser UserPrincipal userPrincipal) {
+        List<Product> lst = product_watchService.findProductByUser(userPrincipal.getId());
         if (lst.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Product>>(lst,HttpStatus.OK);
+        return new ResponseEntity<List<Product>>(lst, HttpStatus.OK);
     }
+
     @PostMapping("user/changepassword")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<?> updateUser(@RequestBody UserDTO user, @CurrentUser UserPrincipal userPrincipal){
+    public ResponseEntity<?> updateUser(@RequestBody UserDTO user, @CurrentUser UserPrincipal userPrincipal) {
 
         PasswordEncoder passencoder = new BCryptPasswordEncoder();
-        UserDetails usDetail=(UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        boolean check=passencoder.matches(user.getPassword(), usDetail.getPassword());
-        if(check==true){
-            Optional<User> numLog=userRepository.findById(userPrincipal.getId());
-            User user1=numLog.get();
+        UserDetails usDetail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        boolean check = passencoder.matches(user.getPassword(), usDetail.getPassword());
+        if (check == true) {
+            Optional<User> numLog = userRepository.findById(userPrincipal.getId());
+            User user1 = numLog.get();
             user1.setPassword(passwordEncoder.encode(user.getPasswordnew()));
             userService.save(user1);
-             return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
     @GetMapping("/user/deleteUser/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteUser(@PathVariable String id){
+    public ResponseEntity<?> deleteUser(@PathVariable String id) {
 
         userService.deleteUser(Long.parseLong(id));
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @PostMapping("user/updateUser")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<?> UpdateUser(@RequestBody User user, @CurrentUser UserPrincipal userPrincipal){
+    public ResponseEntity<?> UpdateUser(@RequestBody User user, @CurrentUser UserPrincipal userPrincipal) {
         Optional<User> entity = userRepository.findById(user.getId());
-
-        try {
-            if(entity.isPresent()){
-                return  new ResponseEntity<>(userService.save(entity.get()),HttpStatus.OK);
-            }
-
+        if (entity.isPresent()) {
+            User en =entity.get();
+            en.setPhone(user.getPhone());
+            en.setAddress(user.getAddress());
+            return new ResponseEntity<>(userService.save(en), HttpStatus.OK);
         }
-        catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
+
     @PostMapping("user/adduser")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> AddUser(@RequestBody UserDTO userDTO, @CurrentUser UserPrincipal userPrincipal){
+    public ResponseEntity<?> AddUser(@RequestBody UserDTO userDTO, @CurrentUser UserPrincipal userPrincipal) {
 
-        UserMapper userMapper=new UserMapper();
-        Date date=new Date();
+        UserMapper userMapper = new UserMapper();
+        Date date = new Date();
         PasswordEncoder passencoder = new BCryptPasswordEncoder();
-        User user=userMapper.toEntity(userDTO);
+        User user = userMapper.toEntity(userDTO);
         user.setDate(date);
         user.setFullname(userDTO.getName());
         user.setPassword(passencoder.encode(userDTO.getPassword()));
         user.setImageUrl(userDTO.getLinkimage());
         try {
             userService.save(user);
-            return  new ResponseEntity<>(HttpStatus.OK);
-        }
-        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
     }
+
     @GetMapping("admin/user/findbyid")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?>findUserbyId(@RequestParam Long id) {
+    public ResponseEntity<?> findUserbyId(@RequestParam Long id) {
         return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
     }
+
     @PostMapping("admin/user/updateUser")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> UpdateUser(@RequestBody User userDTO){
+    public ResponseEntity<?> UpdateUser(@RequestBody User userDTO) {
 
-        Date date=new Date();
-        User user=userRepository.findById(userDTO.getId()).get();
+        Date date = new Date();
+        User user = userRepository.findById(userDTO.getId()).get();
         user.setName(userDTO.getName());
         user.setRole(userDTO.getRole());
         user.setAddress(userDTO.getAddress());
@@ -157,17 +161,17 @@ public class UserController {
         user.setDate(date);
         try {
             userService.save(user);
-            return  new ResponseEntity<>(HttpStatus.OK);
-        }
-        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
     }
+
     @Data
-    private class Current{
+    private class Current {
         private Long id;
-        private  String username;
+        private String username;
     }
 
 
