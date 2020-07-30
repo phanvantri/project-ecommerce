@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -21,7 +22,8 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     public Page<Product> finAll(Pageable pageable);
 
     @Query(value = "select e from Product e where e.name like %:name%")
-    List<Product> searchProduct(String name);
+    List<Product> searchProduct(@Param("name") String name);
+
 
 
 
