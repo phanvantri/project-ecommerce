@@ -61,12 +61,6 @@ public class AuthController {
         String token = tokenProvider.createToken(authentication);
         return ResponseEntity.ok(new AuthResponse(token));
     }
-    @PostMapping("/login1")
-    public ResponseEntity<?> login1(@Valid @RequestBody LoginRequest loginRequest) {
-
-        String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNiIsImlhdCI6MTU5NTUxMTEwMiwiZXhwIjoxNTk2Mzc1MTAyfQ.VidLk3ycGDu-OR3Y-RiQP_Mj5KdY2TlBJZ20RUtKd1WdyDkIZTFiXMWqnWsg3kkado0AaNEDriuQTwbPoeeORw";
-        return ResponseEntity.ok(new AuthResponse(token));
-    }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
