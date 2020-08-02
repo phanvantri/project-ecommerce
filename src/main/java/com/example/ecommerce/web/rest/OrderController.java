@@ -81,15 +81,6 @@ public class OrderController {
         }
         order.setTotalprice(Long.parseLong(String.valueOf(totalprice))+fee);
       Order objOrder=orderService.save(order);
-      //set orders item
-        for(Product s: product){
-            OrdersItem obj=new OrdersItem();
-            obj.setProduct(s);
-            obj.setIdorder(objOrder.getId());
-            obj.setDateAdd( new Date());
-            ordersItemService.save(obj);
-        }
-        orderService.sendEmail(objOrder,product,user,fee);
         InforOrder inforOrder = new InforOrder();
         inforOrder.setIdOrder(objOrder.getId());
         inforOrder.setIdUser(user.getId());
@@ -97,7 +88,7 @@ public class OrderController {
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString ="";
         try {
-             jsonInString = mapper.writeValueAsString(inforOrder);
+            jsonInString = mapper.writeValueAsString(inforOrder);
 
         } catch (JsonGenerationException e) {
             e.printStackTrace();
@@ -109,6 +100,16 @@ public class OrderController {
         String encrypt =  EncyptData.encrypt(jsonInString);
         objOrder.setQrCode(encrypt);
         orderService.save(objOrder);
+      //set orders item
+        for(Product s: product){
+            OrdersItem obj=new OrdersItem();
+            obj.setProduct(s);
+            obj.setIdorder(objOrder.getId());
+            obj.setDateAdd( new Date());
+            ordersItemService.save(obj);
+        }
+        orderService.sendEmail(objOrder,product,user,fee);
+
         return  encrypt;
     }
 
