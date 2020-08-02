@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -65,7 +66,8 @@ public class OrderService {
         return orderRepository.save(order);
     }
     public List<Order> findByOrderOfUser(Long id){
-        return orderRepository.findOrderOfUser(id);
+        List<Order> lst = orderRepository.findOrderOfUser(id).stream().limit(10).collect(Collectors.toList());
+        return lst;
     }
     public Order findById(Long id){
         return orderRepository.findById(id).get();
