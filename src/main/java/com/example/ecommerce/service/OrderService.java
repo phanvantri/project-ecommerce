@@ -66,7 +66,7 @@ public class OrderService {
         return orderRepository.save(order);
     }
     public List<Order> findByOrderOfUser(Long id){
-        List<Order> lst = orderRepository.findOrderOfUser(id).stream().limit(10).collect(Collectors.toList());
+        List<Order> lst = orderRepository.findOrderOfUser(id).stream().limit(5).collect(Collectors.toList());
         return lst;
     }
     public Order findById(Long id){
