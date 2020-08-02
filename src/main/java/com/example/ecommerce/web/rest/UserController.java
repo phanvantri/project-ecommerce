@@ -1,10 +1,12 @@
 package com.example.ecommerce.web.rest;
 
+import com.example.ecommerce.domain.BankUser;
 import com.example.ecommerce.domain.Product;
 import com.example.ecommerce.domain.Product_Watch;
 import com.example.ecommerce.domain.User;
 import com.example.ecommerce.exception.ResourceNotFoundException;
 import com.example.ecommerce.payload.ApiResponse;
+import com.example.ecommerce.repository.BankUserRepository;
 import com.example.ecommerce.repository.UserRepository;
 import com.example.ecommerce.security.CurrentUser;
 import com.example.ecommerce.security.UserPrincipal;
@@ -39,6 +41,8 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private BankUserRepository bankUserRepository;
     @Autowired
     private UserService userService;
     @Autowired
@@ -134,7 +138,11 @@ public class UserController {
         user.setPassword(passencoder.encode(userDTO.getPassword()));
         user.setImageUrl(userDTO.getLinkimage());
         try {
-            userService.save(user);
+            User userEntity = userRepository.saveAndFlush(user);
+            BankUser bankUser = new BankUser();
+            bankUser.setMoney((long)0);
+            bankUser.setUser(userEntity);
+            bankUserRepository.save(bankUser);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

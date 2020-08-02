@@ -1,8 +1,10 @@
 package com.example.ecommerce.security.oauth2;
 
 import com.example.ecommerce.domain.AuthProvider;
+import com.example.ecommerce.domain.BankUser;
 import com.example.ecommerce.domain.User;
 import com.example.ecommerce.exception.OAuth2AuthenticationProcessingException;
+import com.example.ecommerce.repository.BankUserRepository;
 import com.example.ecommerce.repository.UserRepository;
 import com.example.ecommerce.security.UserPrincipal;
 import com.example.ecommerce.security.oauth2.user.OAuth2UserInfo;
@@ -25,6 +27,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    BankUserRepository bankUserRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
@@ -76,7 +80,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         user.setImageUrl(oAuth2UserInfo.getImageUrl());
         user.setRole("ROLE_USER");
         user.setDate(new Date());
-        return userRepository.save(user);
+        User userEntity =  userRepository.saveAndFlush(user);
+        BankUser bankUser = new BankUser();
+        bankUser.setMoney((long)0);
+        bankUser.setUser(userEntity);
+        bankUserRepository.save(bankUser);
+        return user;
     }
 
     private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo) {

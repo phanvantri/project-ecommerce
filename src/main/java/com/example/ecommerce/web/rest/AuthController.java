@@ -1,12 +1,14 @@
 package com.example.ecommerce.web.rest;
 
 import com.example.ecommerce.domain.AuthProvider;
+import com.example.ecommerce.domain.BankUser;
 import com.example.ecommerce.domain.User;
 import com.example.ecommerce.exception.BadRequestException;
 import com.example.ecommerce.payload.ApiResponse;
 import com.example.ecommerce.payload.AuthResponse;
 import com.example.ecommerce.payload.LoginRequest;
 import com.example.ecommerce.payload.SignUpRequest;
+import com.example.ecommerce.repository.BankUserRepository;
 import com.example.ecommerce.repository.UserRepository;
 import com.example.ecommerce.security.TokenProvider;
 import com.example.ecommerce.service.UserService;
@@ -45,6 +47,8 @@ public class AuthController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private BankUserRepository bankUserRepository;
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -76,7 +80,11 @@ public class AuthController {
         user.setImageUrl("https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png");
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
         user.setRole("ROLE_USER");
-        User result = userRepository.save(user);
+        User result = userRepository.saveAndFlush(user);
+        BankUser bankUser = new BankUser();
+        bankUser.setMoney((long)0);
+        bankUser.setUser(result);
+        bankUserRepository.save(bankUser);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/user/me")
                 .buildAndExpand(result.getId()).toUri();
