@@ -21,8 +21,8 @@ spring:
       client:
         registration:
           google:
-            clientId: 5014057553-8gm9um6vnli3cle5rgigcdjpdrid14m9.apps.googleusercontent.com
-            clientSecret: tWZKVLxaD_ARWsriiiUFYoIk
+            clientId: 559255809302-0v45tcriorosc11iivp36p221p9dgskh.apps.googleusercontent.com
+            clientSecret: 5VhN91iwz33cDcPS6m1qIbWD
             redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email
@@ -35,7 +35,7 @@ spring:
               - email
               - public_profile
           github:
-            clientId: d3e47fc2ddd966fa4352
+            clientId: 559255809302-0v45tcriorosc11iivp36p221p9dgskh.apps.googleusercontent.com
             clientSecret: 3bc0f6b8332f93076354c2a5bada2f5a05aea60d
             redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
@@ -67,7 +67,7 @@ app:
     # redirectUri mentioned by the frontend client in the /oauth2/authorize request.
     # We're not using cookies because they won't work well in mobile clients.
     authorizedRedirectUris:
-      - https://ecommercemean.herokuapp.com/oauth2/redirect
+      - https://ecommercexyz.herokuapp.com/oauth2/redirect
       - myandroidapp://oauth2/redirect
       - myiosapp://oauth2/redirect
 server:
